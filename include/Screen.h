@@ -4,15 +4,16 @@
 // Includes
 #include "M5StickC.h"
 
-// Defines
-#define BACKGROUND_COLOR TFT_BLACK
-
 // Class
 class Screen {
+private:
+	uint16_t backgroundColor;
+
 public:
 	Screen();
-	void printLCD(uint16_t color, const char* text, int x, int y);
+	void printLCD(const uint16_t color, const char* text, const int x, const int y);
 	void clearLCD();
-	void clearLCD(int size, int x, int y);
+	void clearLCD(const int size, const int x, const int y);
+	void setBackground(const uint16_t color);
 };
 #endif

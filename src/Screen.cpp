@@ -3,16 +3,19 @@
 /**
  * Set up screen
  */
-Screen::Screen() {
+Screen::Screen()
+	: backgroundColor(TFT_BLACK) {
+
 	M5.Lcd.setSwapBytes(true);
+	clearLCD();
 }
 
 /**
  * Prints text on lcd screen
  */
-void Screen::printLCD(uint16_t color, const char* text, int x, int y) {
+void Screen::printLCD(const uint16_t color, const char* text, const int x, const int y) {
 
-	M5.Lcd.setTextColor(color, BACKGROUND_COLOR);
+	M5.Lcd.setTextColor(color, backgroundColor);
 	M5.Lcd.setCursor(x, y);
 	M5.Lcd.print(text);
 }
@@ -20,12 +23,12 @@ void Screen::printLCD(uint16_t color, const char* text, int x, int y) {
 /**
  * Clears LCD screen
  */
-void Screen::clearLCD(int size, int x, int y) {
+void Screen::clearLCD(const int size, const int x, const int y) {
 
-	M5.Lcd.setTextColor(BACKGROUND_COLOR, BACKGROUND_COLOR);
+	M5.Lcd.setTextColor(backgroundColor, backgroundColor);
 	M5.Lcd.setCursor(x, y);
 
-	for(x = 0; x < size; x++) {
+	for(int i = 0; x < size; i++) {
 		M5.Lcd.print(" ");
 	}
 }
@@ -35,5 +38,14 @@ void Screen::clearLCD(int size, int x, int y) {
  */
 void Screen::clearLCD() {
 
-	M5.Lcd.fillScreen(BACKGROUND_COLOR);
+	M5.Lcd.fillScreen(backgroundColor);
+}
+
+/**
+ * Sets default screen background color
+ *
+ * @param  color color to be set
+ */
+void Screen::setBackground(const uint16_t color) {
+	backgroundColor = color;
 }
