@@ -3,7 +3,7 @@
 /**
  * Set up screen
  */
-Screen::Screen()
+CrowOs::Core::Screen::Screen()
 	: backgroundColor(TFT_BLACK) {
 
 	M5.Lcd.setSwapBytes(true);
@@ -13,7 +13,7 @@ Screen::Screen()
 /**
  * Prints text on lcd screen
  */
-void Screen::printLCD(const uint16_t color, const char* text, const int x, const int y) {
+void CrowOs::Core::Screen::printLCD(const uint16_t color, const char* text, const int x, const int y) {
 
 	M5.Lcd.setTextColor(color, backgroundColor);
 	M5.Lcd.setCursor(x, y);
@@ -23,7 +23,7 @@ void Screen::printLCD(const uint16_t color, const char* text, const int x, const
 /**
  * Clears LCD screen
  */
-void Screen::clearLCD(const int size, const int x, const int y) {
+void CrowOs::Core::Screen::clearLCD(const int size, const int x, const int y) {
 
 	M5.Lcd.setTextColor(backgroundColor, backgroundColor);
 	M5.Lcd.setCursor(x, y);
@@ -36,7 +36,7 @@ void Screen::clearLCD(const int size, const int x, const int y) {
 /**
  * Clears hole LCD screen
  */
-void Screen::clearLCD() {
+void CrowOs::Core::Screen::clearLCD() {
 
 	M5.Lcd.fillScreen(backgroundColor);
 }
@@ -46,6 +46,6 @@ void Screen::clearLCD() {
  *
  * @param  color color to be set
  */
-void Screen::setBackground(const uint16_t color) {
+void CrowOs::Core::Screen::setBackground(const uint16_t color) {
 	backgroundColor = color;
 }

@@ -3,7 +3,7 @@
 /**
  * Set up led
  */
-Led::Led()
+CrowOs::Core::Led::Led()
 	: LED_PIN(36)
 	, state(HIGH) {
 	pinMode(LED_PIN, OUTPUT);
@@ -13,7 +13,7 @@ Led::Led()
 /**
  * Turns on led
  */
-void Led::on() {
+void CrowOs::Core::Led::on() {
 
 	setLed(LOW);
 }
@@ -21,7 +21,7 @@ void Led::on() {
 /**
  * Turns off led
  */
-void Led::off() {
+void CrowOs::Core::Led::off() {
 
 	setLed(HIGH);
 }
@@ -29,7 +29,7 @@ void Led::off() {
 /**
  * Toggles led state
  */
-void Led::toggle() {
+void CrowOs::Core::Led::toggle() {
 
 	setLed(!state);
 }
@@ -39,7 +39,7 @@ void Led::toggle() {
  *
  * @param newState LOW to turn off HIGH to turn on
  */
-void Led::setLed(const bool newState) {
+void CrowOs::Core::Led::setLed(const bool newState) {
 
 	if(state == newState) return;
 	state = newState;

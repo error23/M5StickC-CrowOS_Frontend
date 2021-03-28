@@ -4,18 +4,25 @@
 // Includes
 #include "M5StickC.h"
 
-// Class
-class Led {
-private:
-	const int LED_PIN;
-	bool state;
-	void setLed(const bool newState);
+namespace CrowOs {
+	namespace Core {
 
-public:
-	Led();
-	void on();
-	void off();
-	void toggle();
-};
+		// Classes
+		class Led {
+
+		private:
+			const int LED_PIN;
+			bool state;
+			void setLed(const bool newState);
+
+		public:
+			Led();
+			void on();
+			void off();
+			void toggle();
+		};
+
+	} // namespace Core
+} // namespace CrowOs
 
 #endif
