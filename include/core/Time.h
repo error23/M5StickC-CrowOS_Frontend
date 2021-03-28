@@ -15,15 +15,15 @@ namespace CrowOs {
 			RTC_TimeTypeDef lastActiveTime;
 			int sleepTime;
 
-			int convertTimeInSecondes(const RTC_TimeTypeDef time);
+			int convertTimeInSecondes(const RTC_TimeTypeDef time) const;
 			void updateLastActiveTime(const RTC_TimeTypeDef newTime);
 
 		public:
 			Time();
 			void keepWokedUp();
-			boolean shouldSleep();
-			RTC_TimeTypeDef getUpTime();
-			int getSleepTime();
+			boolean shouldSleep() const;
+			RTC_TimeTypeDef getUpTime() const;
+			int getSleepTime() const;
 			void setSleepTime(const int time);
 		};
 

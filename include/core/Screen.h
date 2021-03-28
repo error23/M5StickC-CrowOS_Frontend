@@ -15,9 +15,9 @@ namespace CrowOs {
 
 		public:
 			Screen();
-			void printLCD(const uint16_t color, const char* text, const int x, const int y);
-			void clearLCD();
-			void clearLCD(const int size, const int x, const int y);
+			void printLCD(const uint16_t color, const char* text, const int x, const int y) const;
+			void clearLCD() const;
+			void clearLCD(const int size, const int x, const int y) const;
 			void setBackground(const uint16_t color);
 		};
 

@@ -25,7 +25,7 @@ void CrowOs::Core::Time::keepWokedUp() {
  *
  * @return true if device should sleep
  */
-boolean CrowOs::Core::Time::shouldSleep() {
+boolean CrowOs::Core::Time::shouldSleep() const {
 
 	return convertTimeInSecondes(upTime) - convertTimeInSecondes(lastActiveTime) > sleepTime;
 }
@@ -36,7 +36,7 @@ boolean CrowOs::Core::Time::shouldSleep() {
   * @param time to Convert
   * @return converted time in seconds
   */
-int CrowOs::Core::Time::convertTimeInSecondes(const RTC_TimeTypeDef time) {
+int CrowOs::Core::Time::convertTimeInSecondes(const RTC_TimeTypeDef time) const {
 
 	return time.Hours * 3600 + time.Minutes * 60 + time.Seconds;
 }
@@ -56,7 +56,7 @@ void CrowOs::Core::Time::updateLastActiveTime(const RTC_TimeTypeDef newTime) {
 /**
  * @return Time since start up
  */
-RTC_TimeTypeDef CrowOs::Core::Time::getUpTime() {
+RTC_TimeTypeDef CrowOs::Core::Time::getUpTime() const {
 
 	return upTime;
 }
@@ -64,7 +64,7 @@ RTC_TimeTypeDef CrowOs::Core::Time::getUpTime() {
 /**
  * @return sleepTime
  */
-int CrowOs::Core::Time::getSleepTime() {
+int CrowOs::Core::Time::getSleepTime() const {
 
 	return sleepTime;
 }
