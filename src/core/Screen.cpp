@@ -1,4 +1,4 @@
-#include "Time.h"
+#include "core/Time.h"
 
 /**
  * Set up Time
@@ -22,7 +22,7 @@ void Time::keepWokedUp() {
 
 /**
  * Indicates if device should sleep
- * 
+ *
  * @return true if device should sleep
  */
 boolean Time::shouldSleep() {
