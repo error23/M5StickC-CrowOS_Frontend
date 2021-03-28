@@ -1,80 +1,51 @@
-#include "core/Time.h"
+#include "core/Screen.h"
 
 /**
- * Set up Time
+ * Set up screen
  */
-Time::Time() {
+Screen::Screen()
+	: backgroundColor(TFT_BLACK) {
 
-	upTime.Hours = 0;
-	upTime.Minutes = 0;
-	upTime.Seconds = 0;
-	M5.Rtc.SetTime(&upTime);
-	updateLastActiveTime(upTime);
+	M5.Lcd.setSwapBytes(true);
+	clearLCD();
 }
 
 /**
- * Keep woked up
+ * Prints text on lcd screen
  */
-void Time::keepWokedUp() {
+void Screen::printLCD(const uint16_t color, const char* text, const int x, const int y) {
 
-	updateLastActiveTime(upTime);
+	M5.Lcd.setTextColor(color, backgroundColor);
+	M5.Lcd.setCursor(x, y);
+	M5.Lcd.print(text);
 }
 
 /**
- * Indicates if device should sleep
+ * Clears LCD screen
+ */
+void Screen::clearLCD(const int size, const int x, const int y) {
+
+	M5.Lcd.setTextColor(backgroundColor, backgroundColor);
+	M5.Lcd.setCursor(x, y);
+
+	for(int i = 0; x < size; i++) {
+		M5.Lcd.print(" ");
+	}
+}
+
+/**
+ * Clears hole LCD screen
+ */
+void Screen::clearLCD() {
+
+	M5.Lcd.fillScreen(backgroundColor);
+}
+
+/**
+ * Sets default screen background color
  *
- * @return true if device should sleep
+ * @param  color color to be set
  */
-boolean Time::shouldSleep() {
-
-	return convertTimeInSecondes(upTime) - convertTimeInSecondes(lastActiveTime) > sleepTime;
-}
-
-/**
-  * Converts RTC_TimeTypeDef in int seconds
-  *
-  * @param time to Convert
-  * @return converted time in seconds
-  */
-int Time::convertTimeInSecondes(const RTC_TimeTypeDef time) {
-
-	return time.Hours * 3600 + time.Minutes * 60 + time.Seconds;
-}
-
-/**
- * Set last active time
- *
- * @param newTime to set
- */
-void Time::updateLastActiveTime(const RTC_TimeTypeDef newTime) {
-
-	lastActiveTime.Hours = newTime.Hours;
-	lastActiveTime.Minutes = newTime.Minutes;
-	lastActiveTime.Seconds = newTime.Seconds;
-}
-
-/**
- * @return Time since start up
- */
-RTC_TimeTypeDef Time::getUpTime() {
-
-	return upTime;
-}
-
-/**
- * @return sleepTime
- */
-int Time::getSleepTime() {
-
-	return sleepTime;
-}
-
-/**
- * sets default sleep time
- *
- * @param time to set
- */
-void Time::setSleepTime(const int time) {
-
-	sleepTime = time;
+void Screen::setBackground(const uint16_t color) {
+	backgroundColor = color;
 }
