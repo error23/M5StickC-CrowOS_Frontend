@@ -1,4 +1,4 @@
-#include "core/Screen.h"
+#include "core/Screen.hpp"
 
 /**
  * Set up screen
