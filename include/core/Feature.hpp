@@ -42,7 +42,7 @@ namespace CrowOs {
 			 * Called every time before loop when state changes to this feature
 			 * You should initialise all your variables here
 			 */
-			virtual void onStart(Screen* screen, Time* time, Led* led);
+			virtual void onStart(Screen* screen, Time* time, Led* led) = 0;
 
 			/**
 			 * Called when state is changed from this feature to another
