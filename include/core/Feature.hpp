@@ -29,7 +29,7 @@ namespace CrowOs {
 			 *
 			 * @param indicates if it should always loop
 			 */
-			Feature(const boolean alwaysLoop);
+			Feature(const boolean alwaysLoop = false);
 
 			/**
 			 * Indicate if feature is always looping dispite of actual state
