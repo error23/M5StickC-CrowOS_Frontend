@@ -1,13 +1,17 @@
 #ifndef LED_H
 #define LED_H
 
-// Includes
+// Lib includes
 #include "M5StickC.h"
 
 namespace CrowOs {
 	namespace Core {
 
-		// Classes
+		/**
+		 * Led class
+		 *
+		 * Used to manage M5StickC led state
+		 */
 		class Led {
 
 		private:

@@ -1,7 +1,14 @@
+/**
+ * Abstract Feature class implementation
+ * @author error23
+ */
+
 #include "core/Feature.hpp"
 
 /**
  * Initialise Feature and add it to static features
+ *
+ * @param alwaysLoop indicates if feature should always loop
  */
 CrowOs::Core::Feature::Feature(boolean alwaysLoop)
 	: alwaysLoop(alwaysLoop) {
@@ -10,7 +17,7 @@ CrowOs::Core::Feature::Feature(boolean alwaysLoop)
 }
 
 /**
- * indicates if feature should always alwaysLoop
+ * indicates if feature should always loop
  *
  * @return alwaysLoop
  */

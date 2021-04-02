@@ -1,13 +1,17 @@
 #ifndef TIME_H
 #define TIME_H
 
-// Includes
+// Lib includes
 #include "M5StickC.h"
 
 namespace CrowOs {
 	namespace Core {
 
-		// Classes
+		/**
+		 * Time class
+		 * 
+		 * Used to manage device upTime and sleepTime
+		 */
 		class Time {
 
 		private:

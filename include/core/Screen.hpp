@@ -1,13 +1,17 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-// Includes
+// Lib includes
 #include "M5StickC.h"
 
 namespace CrowOs {
 	namespace Core {
 
-		// Classes
+		/**
+		 * Screen class
+		 *
+		 * Helper used to manage device screen
+		 */
 		class Screen {
 
 		private:

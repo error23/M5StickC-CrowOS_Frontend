@@ -1,10 +1,14 @@
+/**
+ * Led class implementation
+ * @author error23
+ */
 #include "core/Led.hpp"
 
 /**
  * Set up led
  */
 CrowOs::Core::Led::Led()
-	: LED_PIN(36)
+	: LED_PIN(10)
 	, state(HIGH) {
 	pinMode(LED_PIN, OUTPUT);
 	off();

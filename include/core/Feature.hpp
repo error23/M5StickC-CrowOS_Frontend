@@ -12,30 +12,63 @@
 namespace CrowOs {
 	namespace Core {
 
-		// Classes
+		/**
+		 * Abstract Feature class
+		 *
+		 * Implement this class in order to implement new features
+		 */
 		class Feature {
 
 		private:
-			static std::vector<Feature*> features;
+			/** Indicates if this feature should always loop */
 			const boolean alwaysLoop;
 
-		protected:
 		public:
+			/**
+			 * Initialise new feature
+			 *
+			 * @param indicates if it should always loop
+			 */
 			Feature(const boolean alwaysLoop);
+
+			/**
+			 * Indicate if feature is always looping dispite of actual state
+			 *
+			 * @return true if feature should always loop
+			 */
 			boolean isAlwaysLoop() const;
-			virtual void setUp(Screen& screen, Time& time, Led& led) = 0;
-			virtual void onStart() = 0;
+
+			/**
+			 * Called every time before loop when state changes to this feature
+			 * You should initialise all your variables here
+			 */
+			virtual void onStart(Screen* screen, Time* time, Led* led);
+
+			/**
+			 * Called when state is changed from this feature to another
+			 * You should destroy all your variables here and save them
+			 */
 			virtual void onStop() = 0;
+
+			/**
+			 * Main Feature loop
+			 * You should developp your main loop here
+			 */
 			virtual void loop() = 0;
+
+			/**
+			 * Called when home button is clicked
+			 */
 			virtual void onHomeClick() = 0;
+
+			/**
+			 * Called when home button is double clicked
+			 */
 			virtual void onHomeDoubleClick() = 0;
 		};
 
 	} // namespace Core
 
 } // namespace CrowOs
-
-// Global initialisation method
-void initialiseFeatures();
 
 #endif
