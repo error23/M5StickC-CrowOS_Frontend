@@ -6,9 +6,9 @@
 #include "core/Feature.hpp"
 
 /**
- * indicates if feature should always loop
+ * Indicate if feature is always looping dispite of actual state
  *
- * @return alwaysLoop
+ * @return true if feature should always loop
  */
 boolean CrowOs::Core::Feature::isAlwaysLoop() const {
 	return alwaysLoop;

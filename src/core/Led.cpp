@@ -5,7 +5,7 @@
 #include "core/Led.hpp"
 
 /**
- * Set up led
+ * Initialise led
  */
 CrowOs::Core::Led::Led()
 	: LED_PIN(10)
@@ -31,7 +31,7 @@ void CrowOs::Core::Led::off() {
 }
 
 /**
- * Toggles led state
+ * Toggle led on/off state
  */
 void CrowOs::Core::Led::toggle() {
 

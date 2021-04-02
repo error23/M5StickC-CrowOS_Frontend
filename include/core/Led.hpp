@@ -19,7 +19,12 @@ namespace CrowOs {
 			const int LED_PIN;
 			/** Actual led state */
 			bool state;
-			/** Set led new state */
+
+			/**
+			 * Set led state
+			 * 
+			 * @param newState LOW to turn off HIGH to turn on
+			 */
 			void setLed(const bool newState);
 
 		public:
@@ -29,12 +34,12 @@ namespace CrowOs {
 			Led();
 
 			/**
-			 * Turn led on
+			 * Turns on led
 			 */
 			void on();
 
 			/**
-			 * Turn led off
+			 * Turns off led
 			 */
 			void off();
 

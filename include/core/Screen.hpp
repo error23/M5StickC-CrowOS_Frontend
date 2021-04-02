@@ -27,10 +27,10 @@ namespace CrowOs {
 			/**
 			 * Prints text on the screen
 			 *
-			 * @param  color    text color
-			 * @param  text     text to print
-			 * @param  x        cursor position x
-			 * @param  y        cursor position y
+			 * @param color text color
+			 * @param text  text to print
+			 * @param x     cursor position x
+			 * @param y     cursor position y
 			 */
 			void printText(const uint16_t color, const char* text, const int x, const int y) const;
 
@@ -42,16 +42,16 @@ namespace CrowOs {
 			/**
 			 * Clear screen text
 			 *
-			 * @param  size     of text to clean
-			 * @param  x        cursor x position
-			 * @param  y        cursor y position
+			 * @param size of text to clean
+			 * @param x    cursor x position
+			 * @param y    cursor y position
 			 */
 			void clearText(const int size, const int x, const int y) const;
 
 			/**
 			 * changes screen background color
 			 *
-			 * @param  color         to set
+			 * @param color to set
 			 */
 			void setBackground(const uint16_t color);
 		};

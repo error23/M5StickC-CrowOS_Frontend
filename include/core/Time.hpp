@@ -27,15 +27,15 @@ namespace CrowOs {
 			/**
 			 * Converts RTC_TimeTypeDef in seconds
 			 *
-			 * @param  time                  to convert
-			 * @return                       converted time
+			 * @param  time to convert
+			 * @return converted time
 			 */
 			int convertTimeInSecondes(const RTC_TimeTypeDef time) const;
 
 			/**
 			 * Updates last active time
 			 *
-			 * @param  newTime              to update
+			 * @param newTime to update
 			 */
 			void updateLastActiveTime(const RTC_TimeTypeDef newTime);
 
@@ -55,7 +55,7 @@ namespace CrowOs {
 			/**
 			 * Indicates if device should fall a sleep
 			 *
-			 * @return  true if device shoudl fall a sleep
+			 * @return true if device should fall a sleep
 			 */
 			boolean shouldSleep() const;
 
@@ -76,7 +76,7 @@ namespace CrowOs {
 			/**
 			 * Sets device default sleep time
 			 *
-			 * @param  time         device sleep time
+			 * @param time device sleep time
 			 */
 			void setSleepTime(const int time);
 		};

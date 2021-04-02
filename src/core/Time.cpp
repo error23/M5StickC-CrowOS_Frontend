@@ -6,7 +6,7 @@
 #include "core/Time.hpp"
 
 /**
- * Set up Time
+ * Initialises new Time
  */
 CrowOs::Core::Time::Time() {
 
@@ -18,7 +18,9 @@ CrowOs::Core::Time::Time() {
 }
 
 /**
- * Keep woked up
+ * Keep device woked up
+ *
+ * Call this method every sleep time in order to keep device woked up
  */
 void CrowOs::Core::Time::keepWokedUp() {
 
@@ -26,9 +28,9 @@ void CrowOs::Core::Time::keepWokedUp() {
 }
 
 /**
- * Indicates if device should sleep
+ * Indicates if device should fall a sleep
  *
- * @return true if device should sleep
+ * @return true if device should fall a sleep
  */
 boolean CrowOs::Core::Time::shouldSleep() const {
 
@@ -36,30 +38,9 @@ boolean CrowOs::Core::Time::shouldSleep() const {
 }
 
 /**
-  * Converts RTC_TimeTypeDef in int seconds
-  *
-  * @param time to Convert
-  * @return converted time in seconds
-  */
-int CrowOs::Core::Time::convertTimeInSecondes(const RTC_TimeTypeDef time) const {
-
-	return time.Hours * 3600 + time.Minutes * 60 + time.Seconds;
-}
-
-/**
- * Set last active time
+ * Gets time since device is on
  *
- * @param newTime to set
- */
-void CrowOs::Core::Time::updateLastActiveTime(const RTC_TimeTypeDef newTime) {
-
-	lastActiveTime.Hours = newTime.Hours;
-	lastActiveTime.Minutes = newTime.Minutes;
-	lastActiveTime.Seconds = newTime.Seconds;
-}
-
-/**
- * @return Time since start up
+ * @return devices up time
  */
 RTC_TimeTypeDef CrowOs::Core::Time::getUpTime() const {
 
@@ -67,7 +48,9 @@ RTC_TimeTypeDef CrowOs::Core::Time::getUpTime() const {
 }
 
 /**
- * @return sleepTime
+ * Gets device default sleep time
+ *
+ * @return devices sleep time
  */
 int CrowOs::Core::Time::getSleepTime() const {
 
@@ -75,11 +58,34 @@ int CrowOs::Core::Time::getSleepTime() const {
 }
 
 /**
- * sets default sleep time
+ * Sets device default sleep time
  *
- * @param time to set
+ * @param time device sleep time
  */
 void CrowOs::Core::Time::setSleepTime(const int time) {
 
 	sleepTime = time;
+}
+
+/**
+ * Converts RTC_TimeTypeDef in seconds
+ *
+ * @param  time to convert
+ * @return converted time
+ */
+int CrowOs::Core::Time::convertTimeInSecondes(const RTC_TimeTypeDef time) const {
+
+	return time.Hours * 3600 + time.Minutes * 60 + time.Seconds;
+}
+
+/**
+ * Updates last active time
+ *
+ * @param newTime to update
+ */
+void CrowOs::Core::Time::updateLastActiveTime(const RTC_TimeTypeDef newTime) {
+
+	lastActiveTime.Hours = newTime.Hours;
+	lastActiveTime.Minutes = newTime.Minutes;
+	lastActiveTime.Seconds = newTime.Seconds;
 }

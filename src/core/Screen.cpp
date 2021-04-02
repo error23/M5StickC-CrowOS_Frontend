@@ -6,7 +6,7 @@
 #include "core/Screen.hpp"
 
 /**
- * Set up screen
+ * Initialise screen
  */
 CrowOs::Core::Screen::Screen()
 	: backgroundColor(TFT_BLACK) {
@@ -16,7 +16,12 @@ CrowOs::Core::Screen::Screen()
 }
 
 /**
- * Prints text on lcd screen
+ * Prints text on the screen
+ *
+ * @param color text color
+ * @param text  text to print
+ * @param x     cursor position x
+ * @param y     cursor position y
  */
 void CrowOs::Core::Screen::printText(const uint16_t color, const char* text, const int x, const int y) const {
 
@@ -26,7 +31,20 @@ void CrowOs::Core::Screen::printText(const uint16_t color, const char* text, con
 }
 
 /**
- * Clears LCD screen
+ * Paint screen with background color
+ */
+void CrowOs::Core::Screen::clearLCD() const {
+
+	M5.Lcd.fillScreen(backgroundColor);
+}
+
+/**
+ * Prints text on the screen
+ *
+ * @param color text color
+ * @param text  text to print
+ * @param x     cursor position x
+ * @param y     cursor position y
  */
 void CrowOs::Core::Screen::clearText(const int size, const int x, const int y) const {
 
@@ -39,17 +57,9 @@ void CrowOs::Core::Screen::clearText(const int size, const int x, const int y) c
 }
 
 /**
- * Clears hole LCD screen
- */
-void CrowOs::Core::Screen::clearLCD() const {
-
-	M5.Lcd.fillScreen(backgroundColor);
-}
-
-/**
- * Sets default screen background color
+ * changes screen background color
  *
- * @param  color color to be set
+ * @param color to set
  */
 void CrowOs::Core::Screen::setBackground(const uint16_t color) {
 	backgroundColor = color;
