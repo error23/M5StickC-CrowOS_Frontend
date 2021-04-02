@@ -7,6 +7,10 @@
 /**
  * Initialise Feature factory
  */
-CrowOs::Core::FeatureFactory::FeatureFactory() {
-	featureFactories.push_back(this);
-}
+namespace CrowOs {
+	namespace Core {
+		FeatureFactory::FeatureFactory() {
+			featureFactories[*this] = 0;
+		}
+	} // namespace Core
+} // namespace CrowOs

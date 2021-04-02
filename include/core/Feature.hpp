@@ -39,16 +39,23 @@ namespace CrowOs {
 			boolean isAlwaysLoop() const;
 
 			/**
-			 * Called every time before loop when state changes to this feature
-			 * You should initialise all your variables here
+			 * Called after Feature creation before loop when state changes to this feature
+			 * You should initialise all your variables here and restore savedData to your class
+			 *
+			 * @param screen    Screen helper used to manage screen
+			 * @param time      Time helper used to manage upTime and sleepTime
+			 * @param led       Led helper used to manage Led state
+			 * @param savedData pointer to feature persistent data
 			 */
-			virtual void onStart(Screen* screen, Time* time, Led* led) = 0;
+			virtual void onStart(Screen& screen, Time& time, Led& led, void* savedData) = 0;
 
 			/**
-			 * Called when state is changed from this feature to another
-			 * You should destroy all your variables here and save them
+			 * Called before Feature destroying after loop when state changes  from this feature to another
+			 * You should destroy all your variables here and save the persistent one into savedData pointer
+			 *
+			 * @param  savedData pointer to feature persistent data
 			 */
-			virtual void onStop() = 0;
+			virtual void onStop(void* savedData) = 0;
 
 			/**
 			 * Main Feature loop
