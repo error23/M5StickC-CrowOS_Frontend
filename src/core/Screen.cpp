@@ -2,7 +2,6 @@
  * Screen class implementation
  * @author error23
  */
-
 #include "core/Screen.hpp"
 
 /**

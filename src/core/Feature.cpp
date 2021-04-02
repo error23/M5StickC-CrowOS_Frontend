@@ -2,7 +2,6 @@
  * Abstract Feature class implementation
  * @author error23
  */
-
 #include "core/Feature.hpp"
 
 /**

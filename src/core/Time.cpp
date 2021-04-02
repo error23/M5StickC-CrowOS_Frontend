@@ -2,7 +2,6 @@
  * Time class implementation
  * @author error23
  */
-
 #include "core/Time.hpp"
 
 /**
