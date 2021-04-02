@@ -18,7 +18,7 @@ CrowOs::Core::Screen::Screen()
 /**
  * Prints text on lcd screen
  */
-void CrowOs::Core::Screen::printLCD(const uint16_t color, const char* text, const int x, const int y) const {
+void CrowOs::Core::Screen::printText(const uint16_t color, const char* text, const int x, const int y) const {
 
 	M5.Lcd.setTextColor(color, backgroundColor);
 	M5.Lcd.setCursor(x, y);
@@ -28,7 +28,7 @@ void CrowOs::Core::Screen::printLCD(const uint16_t color, const char* text, cons
 /**
  * Clears LCD screen
  */
-void CrowOs::Core::Screen::clearLCD(const int size, const int x, const int y) const {
+void CrowOs::Core::Screen::clearText(const int size, const int x, const int y) const {
 
 	M5.Lcd.setTextColor(backgroundColor, backgroundColor);
 	M5.Lcd.setCursor(x, y);

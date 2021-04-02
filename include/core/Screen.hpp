@@ -32,7 +32,7 @@ namespace CrowOs {
 			 * @param  x        cursor position x
 			 * @param  y        cursor position y
 			 */
-			void printLCD(const uint16_t color, const char* text, const int x, const int y) const;
+			void printText(const uint16_t color, const char* text, const int x, const int y) const;
 
 			/**
 			 * Paint screen with background color
@@ -46,7 +46,7 @@ namespace CrowOs {
 			 * @param  x        cursor x position
 			 * @param  y        cursor y position
 			 */
-			void clearLCD(const int size, const int x, const int y) const;
+			void clearText(const int size, const int x, const int y) const;
 
 			/**
 			 * changes screen background color
