@@ -4,62 +4,67 @@
  */
 #include "core/Screen.hpp"
 
-/**
- * Initialise screen
- */
-CrowOs::Core::Screen::Screen()
-	: backgroundColor(TFT_BLACK) {
+namespace CrowOs {
+	namespace Core {
 
-	M5.Lcd.setSwapBytes(true);
-	clearLCD();
-}
+		/**
+		 * Initialise screen
+		 */
+		Screen::Screen()
+			: backgroundColor(TFT_BLACK) {
 
-/**
- * Prints text on the screen
- *
- * @param color text color
- * @param text  text to print
- * @param x     cursor position x
- * @param y     cursor position y
- */
-void CrowOs::Core::Screen::printText(const uint16_t color, const char* text, const int x, const int y) const {
+			M5.Lcd.setSwapBytes(true);
+			clearLCD();
+		}
 
-	M5.Lcd.setTextColor(color, backgroundColor);
-	M5.Lcd.setCursor(x, y);
-	M5.Lcd.print(text);
-}
+		/**
+		 * Prints text on the screen
+		 *
+		 * @param color text color
+		 * @param text  text to print
+		 * @param x     cursor position x
+		 * @param y     cursor position y
+		 */
+		void Screen::printText(const uint16_t color, const char* text, const int x, const int y) const {
 
-/**
- * Paint screen with background color
- */
-void CrowOs::Core::Screen::clearLCD() const {
+			M5.Lcd.setTextColor(color, backgroundColor);
+			M5.Lcd.setCursor(x, y);
+			M5.Lcd.print(text);
+		}
 
-	M5.Lcd.fillScreen(backgroundColor);
-}
+		/**
+		 * Paint screen with background color
+		 */
+		void Screen::clearLCD() const {
 
-/**
- * Prints text on the screen
- *
- * @param color text color
- * @param text  text to print
- * @param x     cursor position x
- * @param y     cursor position y
- */
-void CrowOs::Core::Screen::clearText(const int size, const int x, const int y) const {
+			M5.Lcd.fillScreen(backgroundColor);
+		}
 
-	M5.Lcd.setTextColor(backgroundColor, backgroundColor);
-	M5.Lcd.setCursor(x, y);
+		/**
+		 * Prints text on the screen
+		 *
+		 * @param color text color
+		 * @param text  text to print
+		 * @param x     cursor position x
+		 * @param y     cursor position y
+		 */
+		void Screen::clearText(const int size, const int x, const int y) const {
 
-	for(int i = 0; x < size; i++) {
-		M5.Lcd.print(" ");
-	}
-}
+			M5.Lcd.setTextColor(backgroundColor, backgroundColor);
+			M5.Lcd.setCursor(x, y);
 
-/**
- * changes screen background color
- *
- * @param color to set
- */
-void CrowOs::Core::Screen::setBackground(const uint16_t color) {
-	backgroundColor = color;
-}
+			for(int i = 0; x < size; i++) {
+				M5.Lcd.print(" ");
+			}
+		}
+
+		/**
+		 * changes screen background color
+		 *
+		 * @param color to set
+		 */
+		void Screen::setBackground(const uint16_t color) {
+			backgroundColor = color;
+		}
+	} // namespace Core
+} // namespace CrowOs

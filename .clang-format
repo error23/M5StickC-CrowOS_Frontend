@@ -121,8 +121,7 @@ SpaceBeforeInheritanceColon: true
 SortUsingDeclarations: true
 SortIncludes: true
 
-# Comments are for developers, they should arrange them
-ReflowComments: false
+ReflowComments: true
 
 IncludeBlocks: Preserve
 IndentPPDirectives: AfterHash

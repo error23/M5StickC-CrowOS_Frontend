@@ -1,3 +1,7 @@
+#ifndef FEATURE_FACTORY_H
+#define FEATURE_FACTORY_H
+
+#include <map>
 
 #include "Feature.hpp"
 
@@ -8,7 +12,7 @@ namespace CrowOs {
 
 		private:
 			/** Feature factories holder */
-			std::vector<FeatureFactory*> featureFactories;
+			static std::map<FeatureFactory, void*> featureFactories;
 
 		public:
 			/**
@@ -32,3 +36,4 @@ namespace CrowOs {
 
 	} // namespace Core
 } // namespace CrowOs
+#endif

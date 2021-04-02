@@ -4,13 +4,14 @@
  */
 #include "core/FeatureFactory.hpp"
 
-/**
- * Initialise Feature factory
- */
 namespace CrowOs {
 	namespace Core {
+
+		/**
+		 * Initialise Feature factory
+		 */
 		FeatureFactory::FeatureFactory() {
-			featureFactories[*this] = 0;
+			featureFactories[*this];
 		}
 	} // namespace Core
 } // namespace CrowOs

@@ -4,48 +4,53 @@
  */
 #include "core/Led.hpp"
 
-/**
- * Initialise led
- */
-CrowOs::Core::Led::Led()
-	: LED_PIN(10)
-	, state(HIGH) {
-	pinMode(LED_PIN, OUTPUT);
-	off();
-}
+namespace CrowOs {
+	namespace Core {
 
-/**
- * Turns on led
- */
-void CrowOs::Core::Led::on() {
+		/**
+		 * Initialise led
+		 */
+		Led::Led()
+			: LED_PIN(10)
+			, state(HIGH) {
+			pinMode(LED_PIN, OUTPUT);
+			off();
+		}
 
-	setLed(LOW);
-}
+		/**
+		 * Turns on led
+		 */
+		void Led::on() {
 
-/**
- * Turns off led
- */
-void CrowOs::Core::Led::off() {
+			setLed(LOW);
+		}
 
-	setLed(HIGH);
-}
+		/**
+		 * Turns off led
+		 */
+		void Led::off() {
 
-/**
- * Toggle led on/off state
- */
-void CrowOs::Core::Led::toggle() {
+			setLed(HIGH);
+		}
 
-	setLed(!state);
-}
+		/**
+		 * Toggle led on/off state
+		 */
+		void Led::toggle() {
 
-/**
- * set led state
- *
- * @param newState LOW to turn off HIGH to turn on
- */
-void CrowOs::Core::Led::setLed(const bool newState) {
+			setLed(!state);
+		}
 
-	if(state == newState) return;
-	state = newState;
-	digitalWrite(LED_PIN, state);
-}
+		/**
+		 * set led state
+		 *
+		 * @param newState LOW to turn off HIGH to turn on
+		 */
+		void Led::setLed(const bool newState) {
+
+			if(state == newState) return;
+			state = newState;
+			digitalWrite(LED_PIN, state);
+		}
+	} // namespace Core
+} // namespace CrowOs
