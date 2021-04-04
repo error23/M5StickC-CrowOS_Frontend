@@ -11,7 +11,7 @@ namespace CrowOs {
 		 * Initialise Feature factory
 		 */
 		FeatureFactory::FeatureFactory() {
-			featureFactories[*this];
+			featureFactories.push_back({this, NULL});
 		}
 	} // namespace Core
 } // namespace CrowOs

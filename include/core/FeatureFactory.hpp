@@ -1,7 +1,7 @@
 #ifndef FEATURE_FACTORY_H
 #define FEATURE_FACTORY_H
 
-#include <map>
+#include <vector>
 
 #include "Feature.hpp"
 
@@ -10,11 +10,10 @@ namespace CrowOs {
 
 		class FeatureFactory {
 
-		private:
-			/** Feature factories holder */
-			static std::map<FeatureFactory, void*> featureFactories;
-
 		public:
+			/** Feature factories holder */
+			static std::vector<std::pair<FeatureFactory*, void*>> featureFactories;
+
 			/**
 			 * Initialise Feature factory
 			 */
@@ -24,8 +23,19 @@ namespace CrowOs {
 			 * Creates new feature
 			 * You should implement this in order to initialise your Feature
 			 * This method will be called before Feature.onStart method
+			 *
+			 * @return Feature* your feature
 			 */
-			virtual Feature* create() = 0;
+			virtual Feature* createFeature() = 0;
+
+			/**
+			 * Create saved data container.
+			 * You should implement this method in order to create a container
+			 * To your Feature persistent data
+			 *
+			 * @method createSavedData
+			 */
+			virtual void* createSavedData() = 0;
 		};
 
 		/**
