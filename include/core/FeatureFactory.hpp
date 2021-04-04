@@ -7,6 +7,14 @@
 // local Includes
 #include "Feature.hpp"
 
+// Methods
+
+/**
+ * Initialise all feature factories
+ * You should implement this method in order to declare feature factories to the os
+ */
+void initialiseFeatureFactories();
+
 namespace CrowOs {
 	namespace Core {
 
@@ -39,12 +47,6 @@ namespace CrowOs {
 			 */
 			virtual void* createSavedData() = 0;
 		};
-
-		/**
-		 * Initialise all feature factories
-		 * You should implement this method in order to declare feature factories to the os
-		 */
-		void initialiseFeatureFactories();
 
 	} // namespace Core
 } // namespace CrowOs
