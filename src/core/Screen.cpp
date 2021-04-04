@@ -12,6 +12,12 @@ namespace CrowOs {
 		 */
 		Screen::Screen()
 			: backgroundColor(TFT_BLACK) {
+		}
+
+		/**
+		 * Set up Screen helper
+		 */
+		void Screen::setUp() {
 
 			M5.Lcd.setSwapBytes(true);
 			clearLCD();

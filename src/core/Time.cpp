@@ -20,6 +20,14 @@ namespace CrowOs {
 		}
 
 		/**
+		 * Set up Time helper
+		 */
+		void Time::setUp() {
+			M5.Rtc.SetTime(&upTime);
+			updateLastActiveTime(upTime);
+		}
+
+		/**
 		 * Keep device woked up
 		 *
 		 * Call this method every sleep time in order to keep device woked up

@@ -25,6 +25,11 @@ namespace CrowOs {
 			Screen();
 
 			/**
+			 * Set up Screen helper
+			 */
+			void setUp();
+
+			/**
 			 * Prints text on the screen
 			 *
 			 * @param color text color

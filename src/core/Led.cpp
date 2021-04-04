@@ -13,6 +13,12 @@ namespace CrowOs {
 		Led::Led()
 			: LED_PIN(M5_LED)
 			, state(HIGH) {
+		}
+
+		/**
+		 * Set up Led helper
+		 */
+		void Led::setUp() {
 			pinMode(LED_PIN, OUTPUT);
 			off();
 		}

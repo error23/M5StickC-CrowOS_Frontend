@@ -46,6 +46,11 @@ namespace CrowOs {
 			Time();
 
 			/**
+			 * Set up Time helper
+			 */
+			void setUp();
+
+			/**
 			 * Keep device woked up
 			 *
 			 * Call this method every sleep time in order to keep device woked up

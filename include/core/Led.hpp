@@ -34,6 +34,11 @@ namespace CrowOs {
 			Led();
 
 			/**
+			 * Set up Led helper
+			 */
+			void setUp();
+
+			/**
 			 * Turns on led
 			 */
 			void on();
