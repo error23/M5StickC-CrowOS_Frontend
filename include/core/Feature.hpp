@@ -21,7 +21,7 @@ namespace CrowOs {
 
 		private:
 			/** Indicates if this feature should always loop */
-			const boolean alwaysLoop;
+			const bool alwaysLoop;
 
 		public:
 			/**
@@ -29,14 +29,14 @@ namespace CrowOs {
 			 *
 			 * @param indicates if it should always loop
 			 */
-			Feature(const boolean alwaysLoop = false);
+			Feature(const bool alwaysLoop = false);
 
 			/**
 			 * Indicate if feature is always looping dispite of actual state
 			 *
 			 * @return true if feature should always loop
 			 */
-			boolean isAlwaysLoop() const;
+			bool isAlwaysLoop() const;
 
 			/**
 			 * Called after Feature creation before loop when state changes to this feature
