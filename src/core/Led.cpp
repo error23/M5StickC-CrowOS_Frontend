@@ -12,7 +12,7 @@ namespace CrowOs {
 		 */
 		Led::Led()
 			: LED_PIN(M5_LED)
-			, state(HIGH) {
+			, state(LOW) {
 		}
 
 		/**
