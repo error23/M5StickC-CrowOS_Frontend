@@ -42,12 +42,12 @@ namespace CrowOs {
 			 * Called after Feature creation before loop when state changes to this feature
 			 * You should initialise all your variables here and restore savedData to your class
 			 *
-			 * @param screen    Screen helper used to manage screen
-			 * @param time      Time helper used to manage upTime and sleepTime
-			 * @param led       Led helper used to manage Led state
-			 * @param savedData pointer to feature persistent data
+			 * @param screenHelper Screen helper used to manage screen
+			 * @param timeHelper   Time helper used to manage upTime and sleepTime
+			 * @param ledHelper    Led helper used to manage Led state
+			 * @param savedData    pointer to feature persistent data
 			 */
-			virtual void onStart(Screen& screen, Time& time, Led& led, void* savedData) = 0;
+			virtual void onStart(Screen& screenHelper, Time& timeHelper, Led& ledHelper, void* savedData) = 0;
 
 			/**
 			 * Called before Feature destroying after loop when state changes  from this feature to another
