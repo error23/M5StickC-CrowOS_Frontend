@@ -32,6 +32,12 @@ namespace CrowOs {
 			Feature(const bool alwaysLoop = false);
 
 			/**
+			 * Default destructor
+			 *
+			 */
+			virtual ~Feature() = default;
+
+			/**
 			 * Indicate if feature is always looping dispite of actual state
 			 *
 			 * @return true if feature should always loop
