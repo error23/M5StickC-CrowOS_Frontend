@@ -13,7 +13,7 @@ namespace CrowOs {
 		Screen::Screen()
 			: backgroundColor(TFT_BLACK) {
 
-			if(LOG_INFO) Serial.println("Info : Screen created with backgroundColor = TFT_BLACK");
+			if(LOG_INFO) Serial.println("Info : [Screen] created with backgroundColor = TFT_BLACK");
 		}
 
 		/**
@@ -23,7 +23,7 @@ namespace CrowOs {
 
 			M5.Lcd.setSwapBytes(true);
 			clearLCD();
-			if(LOG_INFO) Serial.println("Info : Screen Setup Done");
+			if(LOG_INFO) Serial.println("Info : [Screen] Setup Done");
 		}
 
 		/**
@@ -39,7 +39,7 @@ namespace CrowOs {
 			M5.Lcd.setTextColor(color, backgroundColor);
 			M5.Lcd.setCursor(x, y);
 			M5.Lcd.print(text);
-			if(LOG_DEBUG) Serial.printf("Debug : Screen printText text = %s at x = %d and y = %d\n", text, x, y);
+			if(LOG_DEBUG) Serial.printf("Debug : [Screen] printText text = %s at x = %d and y = %d\n", text, x, y);
 		}
 
 		/**
@@ -48,7 +48,7 @@ namespace CrowOs {
 		void Screen::clearLCD() const {
 
 			M5.Lcd.fillScreen(backgroundColor);
-			if(LOG_DEBUG) Serial.println("Debug : Screen clearLCD");
+			if(LOG_DEBUG) Serial.println("Debug : [Screen] clearLCD");
 		}
 
 		/**
@@ -67,7 +67,7 @@ namespace CrowOs {
 			for(int i = 0; x < size; i++) {
 				M5.Lcd.print(" ");
 			}
-			if(LOG_DEBUG) Serial.printf("Debug : Screen clearText %d caracters at x = %d, y = %d\n", size, x, y);
+			if(LOG_DEBUG) Serial.printf("Debug : [Screen] clearText %d caracters at x = %d, y = %d\n", size, x, y);
 		}
 
 		/**

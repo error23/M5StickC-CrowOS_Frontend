@@ -17,7 +17,7 @@ namespace CrowOs {
 			upTime.Seconds = 0;
 			M5.Rtc.SetTime(&upTime);
 			updateLastActiveTime(upTime);
-			if(LOG_INFO) Serial.println("Info : Time created");
+			if(LOG_INFO) Serial.println("Info : [Time] created");
 		}
 
 		/**
@@ -27,7 +27,7 @@ namespace CrowOs {
 
 			M5.Rtc.SetTime(&upTime);
 			updateLastActiveTime(upTime);
-			if(LOG_INFO) Serial.println("Info : Time Setup Done");
+			if(LOG_INFO) Serial.println("Info : [Time] Setup Done");
 		}
 
 		/**
@@ -37,7 +37,7 @@ namespace CrowOs {
 		 */
 		void Time::keepWokedUp() {
 
-			if(LOG_DEBUG) Serial.println("Debug : Time keepWokedUp");
+			if(LOG_DEBUG) Serial.println("Debug : [Time] keepWokedUp");
 			updateLastActiveTime(upTime);
 		}
 
@@ -48,7 +48,7 @@ namespace CrowOs {
 		 */
 		boolean Time::shouldSleep() const {
 
-			if(LOG_DEBUG) Serial.println("Debug : Time shouldSleep");
+			if(LOG_DEBUG) Serial.println("Debug : [Time] shouldSleep");
 			return convertTimeToSecondes(upTime) - convertTimeToSecondes(lastActiveTime) > sleepTime;
 		}
 
@@ -101,7 +101,7 @@ namespace CrowOs {
 		 */
 		void Time::setSleepTime(const int time) {
 
-			if(LOG_DEBUG) Serial.printf("Debug : Time setSleepTime with time = %ds\n", time);
+			if(LOG_DEBUG) Serial.printf("Debug : [Time] setSleepTime with time = %ds\n", time);
 			sleepTime = time;
 		}
 
@@ -120,7 +120,7 @@ namespace CrowOs {
 				char lastActiveTimeString[9];
 				convertTimeToString(lastActiveTime, lastActiveTimeString);
 
-				Serial.printf("Debug : Time updateLastActiveTime from lastActiveTime = %s with newTime = %s\n", lastActiveTimeString, timeString);
+				Serial.printf("Debug : [Time] updateLastActiveTime from lastActiveTime = %s with newTime = %s\n", lastActiveTimeString, timeString);
 			}
 
 			lastActiveTime.Hours = newTime.Hours;

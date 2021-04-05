@@ -14,7 +14,7 @@ namespace CrowOs {
 			: LED_PIN(M5_LED)
 			, state(LOW) {
 
-			if(LOG_INFO) Serial.printf("Info : Led created with pin = %d and state = %d\n", LED_PIN, state);
+			if(LOG_INFO) Serial.printf("Info : [Led] created with pin = %d and state = %d\n", LED_PIN, state);
 		}
 
 		/**
@@ -24,7 +24,7 @@ namespace CrowOs {
 
 			pinMode(LED_PIN, OUTPUT);
 			off();
-			if(LOG_INFO) Serial.println("Info : Led Setup Done");
+			if(LOG_INFO) Serial.println("Info : [Led] Setup Done");
 		}
 
 		/**
@@ -32,7 +32,7 @@ namespace CrowOs {
 		 */
 		void Led::on() {
 
-			if(LOG_DEBUG) Serial.println("Debug : Led on");
+			if(LOG_DEBUG) Serial.println("Debug : [Led] on");
 			setLed(LOW);
 		}
 
@@ -41,7 +41,7 @@ namespace CrowOs {
 		 */
 		void Led::off() {
 
-			if(LOG_DEBUG) Serial.println("Debug : Led off");
+			if(LOG_DEBUG) Serial.println("Debug : [Led] off");
 			setLed(HIGH);
 		}
 
@@ -50,7 +50,7 @@ namespace CrowOs {
 		 */
 		void Led::toggle() {
 
-			if(LOG_DEBUG) Serial.printf("Debug : Led toggle state = %d, newState = %d\n", state, !state);
+			if(LOG_DEBUG) Serial.printf("Debug : [Led] toggle state = %d, newState = %d\n", state, !state);
 			setLed(!state);
 		}
 
@@ -62,13 +62,13 @@ namespace CrowOs {
 		void Led::setLed(const bool newState) {
 
 			if(state == newState) {
-				if(LOG_DEBUG) Serial.printf("Debug : Led setLed inchanged state = %d, newState = %d\n", state, newState);
+				if(LOG_DEBUG) Serial.printf("Debug : [Led] setLed inchanged state = %d, newState = %d\n", state, newState);
 				return;
 			}
 
 			state = newState;
 			digitalWrite(LED_PIN, state);
-			if(LOG_DEBUG) Serial.printf("Debug : Led setLed state = %d, newState = %d\n", state, newState);
+			if(LOG_DEBUG) Serial.printf("Debug : [Led] setLed state = %d, newState = %d\n", state, newState);
 		}
 	} // namespace Core
 } // namespace CrowOs

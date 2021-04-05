@@ -17,8 +17,8 @@ namespace CrowOs {
 			: featureName(featureName)
 			, alwaysLoop(alwaysLoop) {
 
-			if(LOG_INFO) Serial.printf("Info : feature %s created\n", featureName);
-			if(LOG_DEBUG) Serial.printf("Debug : alwaysLoop = %d\n", alwaysLoop);
+			if(LOG_INFO) Serial.printf("Info : [Feature] %s created\n", featureName);
+			if(LOG_DEBUG) Serial.printf("Debug : [Feature] alwaysLoop = %d\n", alwaysLoop);
 		}
 
 		/**
@@ -26,7 +26,7 @@ namespace CrowOs {
 		 */
 		Feature::~Feature() {
 
-			if(LOG_INFO) Serial.printf("Info : feature %s deleted\n", featureName);
+			if(LOG_INFO) Serial.printf("Info : [Feature] %s deleted\n", featureName);
 		}
 
 		/**
