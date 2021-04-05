@@ -48,9 +48,9 @@ namespace CrowOs {
 		}
 
 		/**
-		 * set led state
+		 * Set led state
 		 *
-		 * @param newState LOW to turn off HIGH to turn on
+		 * @param newState HIGH to turn off LOW to turn on
 		 */
 		void Led::setLed(const bool newState) {
 
