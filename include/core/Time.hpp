@@ -28,14 +28,6 @@ namespace CrowOs {
 			int sleepTime;
 
 			/**
-			 * Converts RTC_TimeTypeDef in seconds
-			 *
-			 * @param  time to convert
-			 * @return converted time
-			 */
-			int convertTimeInSecondes(const RTC_TimeTypeDef time) const;
-
-			/**
 			 * Updates last active time
 			 *
 			 * @param newTime to update
@@ -66,6 +58,22 @@ namespace CrowOs {
 			 * @return true if device should fall a sleep
 			 */
 			boolean shouldSleep() const;
+
+			/**
+			 * Converts RTC_TimeTypeDef to seconds
+			 *
+			 * @param  time to convert
+			 * @return converted time
+			 */
+			int convertTimeToSecondes(const RTC_TimeTypeDef time) const;
+
+			/**
+			 * Converts time to string HH:MM.SS
+			 *
+			 * @param time to convert
+			 * @param dst char* to store into has to have at least size of 9
+			 */
+			void convertTimeToString(const RTC_TimeTypeDef time, char dest[9]) const;
 
 			/**
 			 * Gets time since device is on

@@ -21,19 +21,33 @@ namespace CrowOs {
 
 		class FeatureFactory {
 
+		private:
+			/** Feature factory name */
+			const char* featureFactoryName;
+
+			/**
+			 * Verifies if given featureFactory has same name as this one
+			 *
+			 * @param  featureFactory to verify
+			 * @return true if featureFactory.name is same
+			 */
+			const bool hasSameName(const FeatureFactory* featureFactory) const;
+
 		public:
 			/** Feature factories holder */
 			static std::vector<std::pair<FeatureFactory*, void*>> featureFactories;
 
 			/**
 			 * Initialise Feature factory
+			 *
+			 * @param featureFactoryName indicates name of this feature factory
 			 */
-			FeatureFactory();
+			FeatureFactory(const char* featureFactoryName);
 
 			/**
 			 * Default destructor
 			 */
-			virtual ~FeatureFactory() = default;
+			virtual ~FeatureFactory();
 
 			/**
 			 * Creates new feature

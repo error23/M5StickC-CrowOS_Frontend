@@ -24,7 +24,7 @@ namespace CrowOs {
 			bool state;
 
 			/**
-			 * set led state
+			 * Set led state
 			 *
 			 * @param newState HIGH to turn off LOW to turn on
 			 */

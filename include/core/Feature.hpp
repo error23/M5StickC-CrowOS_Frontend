@@ -21,6 +21,9 @@ namespace CrowOs {
 		class Feature {
 
 		private:
+			/** Feature name */
+			const char* featureName;
+
 			/** Indicates if this feature should always loop */
 			const bool alwaysLoop;
 
@@ -28,14 +31,15 @@ namespace CrowOs {
 			/**
 			 * Initialise new feature
 			 *
-			 * @param indicates if it should always loop
+			 * @param featureName Indicates name of this feature
+			 * @param indicates   if it should always loop
 			 */
-			Feature(const bool alwaysLoop = false);
+			Feature(const char* featureName, const bool alwaysLoop = false);
 
 			/**
 			 * Default destructor
 			 */
-			virtual ~Feature() = default;
+			virtual ~Feature();
 
 			/**
 			 * Indicate if feature is always looping dispite of actual state

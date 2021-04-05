@@ -10,10 +10,23 @@ namespace CrowOs {
 		/**
 		 * Initialise new feature
 		 *
-		 * @param indicates if it should always loop
+		 * @param featureName Indicates name of this feature
+		 * @param indicates   if it should always loop
 		 */
-		Feature::Feature(const bool alwaysLoop /* = false */)
-			: alwaysLoop(alwaysLoop) {
+		Feature::Feature(const char* featureName, const bool alwaysLoop /* = false */)
+			: featureName(featureName)
+			, alwaysLoop(alwaysLoop) {
+
+			if(LOG_INFO) Serial.printf("Info : feature %s created\n", featureName);
+			if(LOG_DEBUG) Serial.printf("Debug : alwaysLoop = %d\n", alwaysLoop);
+		}
+
+		/**
+		 * Default destructor
+		 */
+		Feature::~Feature() {
+
+			if(LOG_INFO) Serial.printf("Info : feature %s deleted\n", featureName);
 		}
 
 		/**
@@ -22,6 +35,7 @@ namespace CrowOs {
 		 * @return true if feature should always loop
 		 */
 		boolean Feature::isAlwaysLoop() const {
+
 			return alwaysLoop;
 		}
 	} // namespace Core
