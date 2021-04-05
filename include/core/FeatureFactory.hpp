@@ -30,6 +30,11 @@ namespace CrowOs {
 			FeatureFactory();
 
 			/**
+			 * Default destructor
+			 */
+			virtual ~FeatureFactory() = default;
+
+			/**
 			 * Creates new feature
 			 * You should implement this in order to initialise your Feature
 			 * This method will be called before Feature.onStart method

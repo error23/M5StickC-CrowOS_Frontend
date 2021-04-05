@@ -33,7 +33,6 @@ namespace CrowOs {
 
 			/**
 			 * Default destructor
-			 *
 			 */
 			virtual ~Feature() = default;
 
