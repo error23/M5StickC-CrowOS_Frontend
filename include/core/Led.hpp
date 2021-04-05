@@ -4,6 +4,9 @@
 // Lib includes
 #include "M5StickC.h"
 
+// local Includes
+#include "Defines.hpp"
+
 namespace CrowOs {
 	namespace Core {
 

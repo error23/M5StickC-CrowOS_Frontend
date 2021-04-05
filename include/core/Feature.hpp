@@ -5,6 +5,7 @@
 #include "M5StickC.h"
 
 // local Includes
+#include "Defines.hpp"
 #include "Led.hpp"
 #include "Screen.hpp"
 #include "Time.hpp"

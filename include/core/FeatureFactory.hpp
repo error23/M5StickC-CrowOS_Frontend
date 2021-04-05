@@ -5,9 +5,8 @@
 #include <vector>
 
 // local Includes
+#include "Defines.hpp"
 #include "Feature.hpp"
-
-// Methods
 
 /**
  * Initialise all feature factories
@@ -55,4 +54,37 @@ namespace CrowOs {
 
 	} // namespace Core
 } // namespace CrowOs
+#endif
+e* @param savedData pointer to feature persistent data* / virtual void onStart(Screen& screenHelper, Time& timeHelper, Led& ledHelper, void* savedData) = 0;
+
+/**
+ * Called before Feature destroying after loop when state changes  from this feature to another
+ * You should destroy all your variables here and save the persistent one into savedData pointer
+ *
+ * @param  savedData pointer to feature persistent data
+ */
+virtual void onStop(void* savedData) = 0;
+
+/**
+ * Main Feature loop
+ * You should developp your main loop here
+ */
+virtual void loop() = 0;
+
+/**
+ * Called when home button is clicked
+ */
+virtual void onHomeClick() = 0;
+
+/**
+ * Called when home button is double clicked
+ */
+virtual void onHomeDoubleClick() = 0;
+}
+;
+
+} // namespace Core
+
+} // namespace CrowOs
+
 #endif
