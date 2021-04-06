@@ -50,7 +50,7 @@ namespace CrowOs {
 			 * @param ledHelper    Led helper used to manage Led state
 			 * @param savedData    pointer to feature persistent data
 			 */
-			virtual void onStart(Screen& screenHelper, Time& timeHelper, Led& ledHelper, void* savedData) = 0;
+			virtual void onStart(Screen* screenHelper, Time* timeHelper, Led* ledHelper, void* savedData) = 0;
 
 			/**
 			 * Called before Feature destroying after loop when state changes from this feature to another

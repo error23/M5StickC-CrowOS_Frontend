@@ -64,9 +64,13 @@ namespace CrowOs {
 			M5.Lcd.setTextColor(backgroundColor, backgroundColor);
 			M5.Lcd.setCursor(x, y);
 
-			for(int i = 0; x < size; i++) {
-				M5.Lcd.print(" ");
+			char buff[size];
+			for(int i = 0; i < size - 1; i++) {
+				buff[i] = ' ';
 			}
+			buff[size - 1] = '\0';
+
+			M5.Lcd.print(buff);
 			if(LOG_DEBUG) Serial.printf("Debug : [Screen] clearText %d caracters at x = %d, y = %d\n", size, x, y);
 		}
 
