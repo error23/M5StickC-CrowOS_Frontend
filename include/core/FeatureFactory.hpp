@@ -37,9 +37,6 @@ namespace CrowOs {
 			/** Feature factories holder */
 			static std::vector<std::pair<FeatureFactory*, void*>> featureFactories;
 
-			/** Permanent feature factiries holder */
-			static std::vector<FeatureFactory*> permanentFeatureFactories;
-
 			/**
 			 * Initialise Feature factory
 			 *
