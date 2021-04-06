@@ -19,10 +19,10 @@ namespace CrowOs {
 		FeatureFactory::FeatureFactory(const char* featureFactoryName, const bool alwaysLoop /* = false */)
 			: featureFactoryName(featureFactoryName)
 			, alwaysLoop(alwaysLoop) {
+			if(LOG_INFO) Serial.printf("Info : [FeatureFactory] %s created with alwaysLoop = %d\n", featureFactoryName, alwaysLoop);
 
 			featureFactories.push_back({this, NULL});
-
-			if(LOG_INFO) Serial.printf("Info : [FeatureFactory] %s created with alwaysLoop = %d\n", featureFactoryName, alwaysLoop);
+			if(LOG_DEBUG) Serial.printf("Debug : [FeatureFactory] %s added to featureFactories actualSize = %d\n", featureFactoryName, featureFactories.size());
 		}
 
 		/**
@@ -33,7 +33,7 @@ namespace CrowOs {
 			std::remove_if(featureFactories.begin(), featureFactories.end(), [this](std::pair<FeatureFactory*, void*> pair) {
 				if(hasSameName(pair.first)) {
 
-					if(LOG_DEBUG) Serial.printf("Debug : [FeatureFactory] %s removed from featureFactories\n", featureFactoryName);
+					if(LOG_DEBUG) Serial.printf("Debug : [FeatureFactory] %s removed from featureFactories actualSize = %d\n", featureFactoryName, featureFactories.size());
 					return true;
 
 				} else {

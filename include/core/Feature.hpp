@@ -78,6 +78,13 @@ namespace CrowOs {
 			 * Called when home button is double clicked
 			 */
 			virtual void onHomeDoubleClick() = 0;
+
+			/**
+			 * Gets the name of this feature
+			 *
+			 * @return featureName
+			 */
+			const char* getFeatureName() const;
 		};
 
 	} // namespace Core

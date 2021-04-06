@@ -26,5 +26,14 @@ namespace CrowOs {
 			if(LOG_INFO) Serial.printf("Info : [Feature] %s deleted\n", featureName);
 		}
 
+		/**
+		 * Gets the name of this feature
+		 *
+		 * @return featureName
+		 */
+		const char* Feature::getFeatureName() const {
+			return featureName;
+		}
+
 	} // namespace Core
 } // namespace CrowOs
