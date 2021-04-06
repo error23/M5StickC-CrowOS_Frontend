@@ -37,6 +37,9 @@ namespace CrowOs {
 			/** Feature factories holder */
 			static std::vector<std::pair<FeatureFactory*, void*>> featureFactories;
 
+			/** Permanent feature factiries holder */
+			static std::vector<FeatureFactory*> permanentFeatureFactories;
+
 			/**
 			 * Initialise Feature factory
 			 *
@@ -57,15 +60,6 @@ namespace CrowOs {
 			 * @return Feature* your feature
 			 */
 			virtual Feature* createFeature() = 0;
-
-			/**
-			 * Create saved data container.
-			 * You should implement this method in order to create a container
-			 * To your Feature persistent data
-			 *
-			 * @method createSavedData
-			 */
-			virtual void* createSavedData() = 0;
 		};
 
 	} // namespace Core
