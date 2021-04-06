@@ -25,6 +25,9 @@ namespace CrowOs {
 			/** Feature factory name */
 			const char* featureFactoryName;
 
+			/** Indicates if feature made by this factory should be always in a main loop */
+			const bool alwaysLoop;
+
 			/**
 			 * Verifies if given featureFactory has same name as this one
 			 *
@@ -34,15 +37,16 @@ namespace CrowOs {
 			const bool hasSameName(const FeatureFactory* featureFactory) const;
 
 		public:
-			/** Feature factories holder */
+			/** Feature factories static holder */
 			static std::vector<std::pair<FeatureFactory*, void*>> featureFactories;
 
 			/**
 			 * Initialise Feature factory
 			 *
 			 * @param featureFactoryName indicates name of this feature factory
+			 * @param alwaysLoop         indicates if feature made by this factory should be always in a main loop default false
 			 */
-			FeatureFactory(const char* featureFactoryName);
+			FeatureFactory(const char* featureFactoryName, const bool alwaysLoop = false);
 
 			/**
 			 * Default destructor
@@ -53,10 +57,19 @@ namespace CrowOs {
 			 * Creates new feature
 			 * You should implement this in order to initialise your Feature
 			 * This method will be called before Feature.onStart method
+			 * Ex:
+			 * return new MyFeature();
 			 *
 			 * @return Feature* your feature
 			 */
 			virtual Feature* createFeature() = 0;
+
+			/**
+			 * Indicates if feature made by this factory should be always in a main loop
+			 *
+			 * @return alwayLoop boolean
+			 */
+			const bool isAlwaysLoop() const;
 		};
 
 	} // namespace Core

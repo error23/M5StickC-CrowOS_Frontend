@@ -14,12 +14,15 @@ namespace CrowOs {
 		 * Initialise Feature factory
 		 *
 		 * @param featureFactoryName indicates name of this feature factory
+		 * @param alwaysLoop Indicates if feature made by this factory should be always in a main loop default false
 		 */
-		FeatureFactory::FeatureFactory(const char* featureFactoryName)
-			: featureFactoryName(featureFactoryName) {
+		FeatureFactory::FeatureFactory(const char* featureFactoryName, const bool alwaysLoop /* = false */)
+			: featureFactoryName(featureFactoryName)
+			, alwaysLoop(alwaysLoop) {
+
 			featureFactories.push_back({this, NULL});
 
-			if(LOG_INFO) Serial.printf("Info : [FeatureFactory] %s created\n", featureFactoryName);
+			if(LOG_INFO) Serial.printf("Info : [FeatureFactory] %s created with alwaysLoop = %d\n", featureFactoryName, alwaysLoop);
 		}
 
 		/**
@@ -50,6 +53,16 @@ namespace CrowOs {
 		const bool FeatureFactory::hasSameName(const FeatureFactory* featureFactory) const {
 
 			return strcmp(featureFactoryName, featureFactory->featureFactoryName) == 0;
+		}
+
+		/**
+		 * Indicates if feature made by this factory should be always in a main loop
+		 *
+		 * @return alwayLoop boolean
+		 */
+		const bool FeatureFactory::isAlwaysLoop() const {
+
+			return alwaysLoop;
 		}
 
 	} // namespace Core

@@ -24,17 +24,13 @@ namespace CrowOs {
 			/** Feature name */
 			const char* featureName;
 
-			/** Indicates if this feature should always loop */
-			const bool alwaysLoop;
-
 		public:
 			/**
 			 * Initialise new feature
 			 *
 			 * @param featureName Indicates name of this feature
-			 * @param indicates   if it should always loop
 			 */
-			Feature(const char* featureName, const bool alwaysLoop = false);
+			Feature(const char* featureName);
 
 			/**
 			 * Default destructor
@@ -42,15 +38,12 @@ namespace CrowOs {
 			virtual ~Feature();
 
 			/**
-			 * Indicate if feature is always looping dispite of actual state
-			 *
-			 * @return true if feature should always loop
-			 */
-			bool isAlwaysLoop() const;
-
-			/**
 			 * Called after Feature creation before loop when state changes to this feature
-			 * You should initialise all your variables here and restore savedData to your class
+			 * You should initialise all your variables here and restore savedData to your class it savedData is not null
+			 * Ex :
+			 * 	if(savedData != NULL) {
+			 *		savedInteger = *((int*)savedData);
+			 *	}
 			 *
 			 * @param screenHelper Screen helper used to manage screen
 			 * @param timeHelper   Time helper used to manage upTime and sleepTime
@@ -60,8 +53,11 @@ namespace CrowOs {
 			virtual void onStart(Screen& screenHelper, Time& timeHelper, Led& ledHelper, void* savedData) = 0;
 
 			/**
-			 * Called before Feature destroying after loop when state changes  from this feature to another
+			 * Called before Feature destroying after loop when state changes from this feature to another
 			 * You should destroy all your variables here and save the persistent one into savedData pointer
+			 * Ex :
+			 * delete pointer;
+			 * *((int*)savedData) = savedInteger;
 			 *
 			 * @param  savedData pointer to feature persistent data
 			 */
