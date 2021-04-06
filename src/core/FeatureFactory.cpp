@@ -30,16 +30,21 @@ namespace CrowOs {
 		 */
 		FeatureFactory::~FeatureFactory() {
 
-			std::remove_if(featureFactories.begin(), featureFactories.end(), [this](std::pair<FeatureFactory*, void*> pair) {
-				if(hasSameName(pair.first)) {
+			featureFactories.erase(std::remove_if(featureFactories.begin(),
+												  featureFactories.end(),
+												  [this](std::pair<FeatureFactory*, void*> pair) {
+													  if(hasSameName(pair.first)) {
 
-					if(LOG_DEBUG) Serial.printf("Debug : [FeatureFactory] %s removed from featureFactories actualSize = %d\n", featureFactoryName, featureFactories.size());
-					return true;
+														  if(LOG_DEBUG) Serial.printf("Debug : [FeatureFactory] %s removed from featureFactories", featureFactoryName);
+														  return true;
 
-				} else {
-					return false;
-				}
-			});
+													  } else {
+														  return false;
+													  }
+												  }),
+								   featureFactories.end());
+
+			if(LOG_DEBUG) Serial.printf(" actualSize = %d\n", featureFactories.size());
 
 			if(LOG_INFO) Serial.printf("Info : [FeatureFactory] %s deleted\n", featureFactoryName);
 		}

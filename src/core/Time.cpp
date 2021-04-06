@@ -15,8 +15,6 @@ namespace CrowOs {
 			upTime.Hours = 0;
 			upTime.Minutes = 0;
 			upTime.Seconds = 0;
-			M5.Rtc.SetTime(&upTime);
-			updateLastActiveTime(upTime);
 			if(LOG_INFO) Serial.println("Info : [Time] created");
 		}
 
