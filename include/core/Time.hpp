@@ -27,6 +27,18 @@ namespace CrowOs {
 			/** Default time to put device on sleep */
 			int sleepTime;
 
+			/** Max fps */
+			double maxFps;
+
+			/** Last time that limitFps was Executed */
+			double limitFpsLastTime;
+
+			/** Last time we calculated fps */
+			double fpsLastTime;
+
+			/** Number of fps since fpsLastTime */
+			double frames;
+
 			/**
 			 * Updates last active time
 			 *
@@ -37,8 +49,11 @@ namespace CrowOs {
 		public:
 			/**
 			 * Initialises new Time
+			 *
+			 * @param speepTime time to put device on sleep default 60
+			 * @param maxFps max fps default 25
 			 */
-			Time();
+			Time(const int sleepTime = 60, const double maxFps = 25);
 
 			/**
 			 * Set up Time helper
@@ -95,6 +110,11 @@ namespace CrowOs {
 			 * @param time device sleep time
 			 */
 			void setSleepTime(const int time);
+
+			/**
+			 * Limit fps
+			 */
+			void limitFps();
 		};
 
 	} // namespace Core

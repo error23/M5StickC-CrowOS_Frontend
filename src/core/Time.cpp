@@ -9,13 +9,24 @@ namespace CrowOs {
 
 		/**
 		 * Initialises new Time
+		 *
+		 * @param speepTime time to put device on sleep default 60
+		 * @param maxFps max fps default 25
 		 */
-		Time::Time() {
+		Time::Time(const int sleepTime /* = 60 */, const double maxFps /* = 25 */)
+			: sleepTime(sleepTime)
+			, maxFps(maxFps) {
 
 			upTime.Hours = 0;
 			upTime.Minutes = 0;
 			upTime.Seconds = 0;
-			if(LOG_INFO) Serial.println("Info : [Time] created");
+			updateLastActiveTime(upTime);
+
+			limitFpsLastTime = 0;
+			fpsLastTime = 0;
+			frames = 0;
+
+			if(LOG_INFO) Serial.printf("Info : [Time] created with sleepTime = %d, maxFps = %fl\n", sleepTime, maxFps);
 		}
 
 		/**
@@ -101,6 +112,36 @@ namespace CrowOs {
 
 			if(LOG_DEBUG) Serial.printf("Debug : [Time] setSleepTime with time = %ds\n", time);
 			sleepTime = time;
+		}
+
+		/**
+		 * Limit fps
+		 */
+		void Time::limitFps() {
+
+			frames++;
+			M5.Rtc.GetTime(&upTime);
+			double now = micros() / 1000;
+			double maxFrameInterval = 1000 / (maxFps * 0.5) + (maxFps * 0.5); // calculate max time for one frame to execute
+
+			double limitFpsElipsed = now - limitFpsLastTime; // calculate elipsed since last method call
+			limitFpsLastTime = now; // update last method call
+			double limitFpsDelta = ceil((maxFrameInterval - limitFpsElipsed) * 0.5); // calculate delta between maxFrameInterval and last method call
+
+			if(limitFpsDelta > 0) {
+				delay(limitFpsDelta);
+				if(LOG_DEBUG) Serial.printf("Debug : [Time] limitFps sleeped for %flms\n", limitFpsDelta);
+			} else if(limitFpsDelta < 0) {
+				if(LOG_DEBUG) Serial.printf("Debug : [Time] limitFps lost frames = %fl\n", -limitFpsDelta / maxFrameInterval);
+			}
+
+			double fpsElipsed = now - fpsLastTime;
+			if(fpsElipsed >= 5000) {
+
+				if(LOG_INFO) Serial.printf("Info : [Time] limitFps fps = %fl\n", frames / 5);
+				fpsLastTime = now;
+				frames = 0;
+			}
 		}
 
 		/**
