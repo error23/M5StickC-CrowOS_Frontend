@@ -1,3 +1,7 @@
+/**
+ * CrowOs Main implementation
+ * @author error23
+ */
 #include "Main.hpp"
 
 using namespace CrowOs::Core;
