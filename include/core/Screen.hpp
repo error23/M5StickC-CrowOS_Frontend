@@ -7,6 +7,9 @@
 // local Includes
 #include "Defines.hpp"
 
+// Resource includes
+#include "resources/logo.hpp"
+
 namespace CrowOs {
 	namespace Core {
 
