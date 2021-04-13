@@ -19,6 +19,11 @@ void initialiseFeatureFactories();
 namespace CrowOs {
 	namespace Core {
 
+		/**
+		 * Abstract feature factory class
+		 *
+		 * Implement this class in order to declare your feature creation mehtod
+		 */
 		class FeatureFactory {
 
 		private:
