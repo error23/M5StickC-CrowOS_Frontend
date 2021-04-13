@@ -65,6 +65,11 @@ namespace CrowOs {
 			 * @param color to set
 			 */
 			void setBackground(const uint16_t color);
+
+			/**
+			 * Shows crow logo
+			 */
+			void showLogo() const;
 		};
 
 	} // namespace Core

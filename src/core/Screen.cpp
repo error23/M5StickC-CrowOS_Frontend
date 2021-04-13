@@ -22,9 +22,6 @@ namespace CrowOs {
 		void Screen::setUp() {
 
 			clearLCD();
-			M5.Lcd.pushImage(2, 8, 79, 144, res_logo);
-			delay(5000);
-			clearLCD();
 			if(LOG_INFO) Serial.println("Info : [Screen] Setup Done");
 		}
 
@@ -85,5 +82,14 @@ namespace CrowOs {
 
 			backgroundColor = color;
 		}
+
+		/**
+		 * Shows crow logo
+		 */
+		void Screen::showLogo() const {
+			clearLCD();
+			M5.Lcd.pushImage(2, 8, 79, 144, res_logo);
+		}
+
 	} // namespace Core
 } // namespace CrowOs
