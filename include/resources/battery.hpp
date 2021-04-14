@@ -66,11 +66,3 @@ const unsigned short res_battery_100[135] PROGMEM = {
 	0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, // 0x0070 (112) pixels
 	0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x0000, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, 0x07FF, // 0x0080 (128) pixels
 };
-
-<svg width="15" height="9" xmlns="http://www.w3.org/2000/svg">
- <g>
-  <title>Layer 1</title>
-  <path stroke-width="0" transform="rotate(90 7.5,4.500000476837159) " fill="#00ffff" id="svg_1" d="m10.85805,-1.37118l-1.20086,0l0,-1.46777l-4.31439,0l0,1.46777l-1.20086,0a0.95634,0.97608 0 0 0 -0.95634,0.97608l0,11.25797c0,0.53574 0.43144,0.97608 0.95634,0.97608l6.7161,0a0.95634,0.97608 0 0 0 0.95634,-0.97608l0,-11.25797c0,-0.53574 -0.43144,-0.97608 -0.95634,-0.97608l0.00001,0z" stroke="null"/>
- </g>
-
-</svg>
