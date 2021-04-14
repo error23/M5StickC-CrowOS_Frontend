@@ -12,7 +12,8 @@ namespace CrowOs {
 		 */
 		Led::Led()
 			: LED_PIN(M5_LED)
-			, state(LOW) {
+			, state(LOW)
+			, lastTimeBlink(0) {
 
 			if(LOG_INFO) Serial.printf("Info : [Led] created with pin = %d and state = %d\n", LED_PIN, state);
 		}
@@ -52,6 +53,19 @@ namespace CrowOs {
 
 			if(LOG_DEBUG) Serial.printf("Debug : [Led] toggle state = %d, newState = %d\n", state, !state);
 			setLed(!state);
+		}
+
+		/**
+		 * Blink the led
+		 *
+		 * @param delay deley between two blinks
+		 */
+		void Led::blink(const int delay) {
+
+			if(millis() - lastTimeBlink > delay) {
+				toggle();
+				lastTimeBlink = millis();
+			}
 		}
 
 		/**

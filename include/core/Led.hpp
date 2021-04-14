@@ -20,8 +20,12 @@ namespace CrowOs {
 		private:
 			/** Led pin number */
 			const int LED_PIN;
+
 			/** Actual led state */
 			bool state;
+
+			/** Last time blink */
+			long lastTimeBlink;
 
 			/**
 			 * Set led state
@@ -55,6 +59,13 @@ namespace CrowOs {
 			 * Toggle led on/off state
 			 */
 			void toggle();
+
+			/**
+			 * Blink the led
+			 *
+			 * @param delay between two blinks
+			 */
+			void blink(const int delay);
 		};
 
 	} // namespace Core
