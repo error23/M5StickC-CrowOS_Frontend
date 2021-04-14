@@ -15,16 +15,15 @@ namespace CrowOs {
 		 */
 		Time::Time(const int sleepTime /* = 60 */, const double maxFps /* = 25 */)
 			: sleepTime(sleepTime)
-			, maxFps(maxFps) {
+			, maxFps(maxFps)
+			, limitFpsLastTime(0)
+			, fpsLastTime(0)
+			, frames(0) {
 
 			upTime.Hours = 0;
 			upTime.Minutes = 0;
 			upTime.Seconds = 0;
 			updateLastActiveTime(upTime);
-
-			limitFpsLastTime = 0;
-			fpsLastTime = 0;
-			frames = 0;
 
 			if(LOG_INFO) Serial.printf("Info : [Time] created with sleepTime = %d, maxFps = %fl\n", sleepTime, maxFps);
 		}
