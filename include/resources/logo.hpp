@@ -5,11 +5,11 @@
 // Memory usage   : 22752 bytes
 
 #if defined(__AVR__)
-#	include <avr/pgmspace.h>
+	#include <avr/pgmspace.h>
 #elif defined(__PIC32MX__)
-#	define PROGMEM
+	#define PROGMEM
 #elif defined(__arm__)
-#	define PROGMEM
+	#define PROGMEM
 #endif
 
 const unsigned short res_logo[11376] PROGMEM = {
