@@ -133,7 +133,7 @@ void onHomeClick() {
 
 	if(LOG_DEBUG) Serial.println("Debug : [Main] onHomeClick general");
 
-	currentFeature->onHomeClick();
+	if(currentFeature != NULL) currentFeature->onHomeClick();
 }
 
 /**
@@ -144,7 +144,7 @@ void onHomeDoubleClick() {
 
 	if(LOG_DEBUG) Serial.println("Debug : [Main] onHomeDoubleClick general");
 
-	currentFeature->onHomeDoubleClick();
+	if(currentFeature != NULL) currentFeature->onHomeDoubleClick();
 }
 
 /**
