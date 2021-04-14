@@ -11,7 +11,8 @@ namespace CrowOs {
 		 * Initialise screen
 		 */
 		Screen::Screen()
-			: backgroundColor(TFT_BLACK) {
+			: backgroundColor(TFT_BLACK)
+			, brightness(15) {
 
 			if(LOG_INFO) Serial.println("Info : [Screen] created with backgroundColor = TFT_BLACK");
 		}
@@ -21,6 +22,7 @@ namespace CrowOs {
 		 */
 		void Screen::setUp() {
 
+			M5.Axp.ScreenBreath(brightness);
 			clearLCD();
 			if(LOG_INFO) Serial.println("Info : [Screen] Setup Done");
 		}
@@ -89,6 +91,18 @@ namespace CrowOs {
 		void Screen::showLogo() const {
 			clearLCD();
 			M5.Lcd.pushImage(2, 8, 79, 144, res_logo);
+			if(LOG_DEBUG) Serial.println("Debug : [Screen] showLogo at x = 2, y = 8, w = 79, h = 144");
+		}
+
+		/**
+		 * Changes current brightness
+		 */
+		void Screen::changeBrightness() {
+
+			brightness++;
+			if(brightness > 15) brightness = 7;
+			M5.Axp.ScreenBreath(brightness);
+			if(LOG_DEBUG) Serial.printf("Debug : [Screen] changeBrightness brightness = %d\n", brightness);
 		}
 
 	} // namespace Core

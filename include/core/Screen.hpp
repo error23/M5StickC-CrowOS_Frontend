@@ -21,8 +21,11 @@ namespace CrowOs {
 		class Screen {
 
 		private:
-			/** Actual default background color */
+			/** Current default background color */
 			uint16_t backgroundColor;
+
+			/** Current brightness */
+			short brightness;
 
 		public:
 			/**
@@ -70,6 +73,11 @@ namespace CrowOs {
 			 * Shows crow logo
 			 */
 			void showLogo() const;
+
+			/**
+			 * Changes current brightness
+			 */
+			void changeBrightness();
 		};
 
 	} // namespace Core
