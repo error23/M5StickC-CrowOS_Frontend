@@ -131,7 +131,8 @@ namespace CrowOs {
 			if(limitFpsDelta > 0) {
 				delay(limitFpsDelta);
 				if(LOG_DEBUG) Serial.printf("Debug : [Time] limitFps sleeped for %flms\n", limitFpsDelta);
-			} else if(limitFpsDelta < 0) {
+			}
+			else if(limitFpsDelta < 0) {
 				if(LOG_DEBUG) Serial.printf("Debug : [Time] limitFps lost frames = %fl\n", -limitFpsDelta / maxFrameInterval);
 			}
 

@@ -37,8 +37,8 @@ namespace CrowOs {
 
 														  if(LOG_DEBUG) Serial.printf("Debug : [FeatureFactory] %s removed from featureFactories", featureFactoryName);
 														  return true;
-
-													  } else {
+													  }
+													  else {
 														  return false;
 													  }
 												  }),
