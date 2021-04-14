@@ -63,6 +63,7 @@ namespace CrowOs {
 		void Led::blink(const int delay) {
 
 			if(millis() - lastTimeBlink > delay) {
+				if(LOG_DEBUG) Serial.printf("Debug : [Led] blink delay = %d, lastTimeBlink = %ld\n", delay, lastTimeBlink);
 				toggle();
 				lastTimeBlink = millis();
 			}
