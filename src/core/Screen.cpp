@@ -62,7 +62,7 @@ namespace CrowOs {
 		 */
 		void Screen::clearText(const int size, const int x, const int y) const {
 
-			M5.Lcd.setTextColor(backgroundColor, backgroundColor);
+			M5.Lcd.setTextColor(backgroundColor - 1, backgroundColor);
 			M5.Lcd.setCursor(x, y);
 
 			char buff[size];
