@@ -45,7 +45,6 @@ void setup() {
 
 	initialiseFeatureFactories();
 	setUpPermanentFeatures(); // TODO : should be deleted
-
 	if(LOG_INFO) Serial.println("Info : [Main] Setup Done");
 }
 
@@ -120,10 +119,9 @@ void setUpButtons() {
  */
 void tickButtons() {
 
+	if(LOG_DEBUG) Serial.println("Debug : [Main] tickButtons");
 	homeButton.tick();
 	upButton.tick();
-
-	if(LOG_DEBUG) Serial.println("Debug : [Main] tickButtons");
 }
 
 /**
@@ -132,7 +130,6 @@ void tickButtons() {
 void onHomeClick() {
 
 	if(LOG_DEBUG) Serial.println("Debug : [Main] onHomeClick general");
-
 	if(currentFeature != NULL) currentFeature->onHomeClick();
 }
 
@@ -177,7 +174,6 @@ void onUpButtonClick() {
  */
 void onUpButtonDoubleClick() {
 
-	if(LOG_DEBUG) {
-		Serial.println("Debug : [Main] onUpButtonDoubleClick general");
-	}
+	if(LOG_DEBUG) Serial.println("Debug : [Main] onUpButtonDoubleClick general");
+	screenHelper.changeBrightness();
 }
