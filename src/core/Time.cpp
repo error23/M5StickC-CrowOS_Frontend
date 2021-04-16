@@ -120,7 +120,7 @@ namespace CrowOs {
 
 			frames++;
 			M5.Rtc.GetTime(&upTime);
-			double now = micros() / 1000;
+			unsigned long now = micros() / 1000;
 			double maxFrameInterval = 1000 / (maxFps * 0.5) + (maxFps * 0.5); // calculate max time for one frame to execute
 
 			double limitFpsElipsed = now - limitFpsLastTime; // calculate elipsed since last method call

@@ -25,7 +25,7 @@ namespace CrowOs {
 			bool state;
 
 			/** Last time blink */
-			long lastTimeBlink;
+			unsigned long lastTimeBlink;
 
 			/**
 			 * Set led state

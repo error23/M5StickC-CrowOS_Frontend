@@ -31,10 +31,10 @@ namespace CrowOs {
 			double maxFps;
 
 			/** Last time that limitFps was Executed */
-			double limitFpsLastTime;
+			unsigned long limitFpsLastTime;
 
 			/** Last time we calculated fps */
-			double fpsLastTime;
+			unsigned long fpsLastTime;
 
 			/** Number of fps since fpsLastTime */
 			double frames;
