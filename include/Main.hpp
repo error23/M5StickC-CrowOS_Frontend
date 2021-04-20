@@ -13,8 +13,6 @@
 #include "core/Screen.hpp"
 #include "core/Time.hpp"
 
-// Methods
-
 /**
  * Main setUp method
  */
@@ -26,34 +24,62 @@ void setup();
 void loop();
 
 /**
+ * Main shutdown method
+ */
+void shutdown();
+
+/**
+ * Put device in sleep mode
+ */
+void sleep();
+
+/**
+ * Wakes up device
+ */
+void wakeUp();
+
+/**
  * Sets up alwaysLoop = true features
  */
 void setUpPermanentFeatures();
 
 /**
- * Sets up all buttons from OneButton.h
+ * Deletes all alwaysLoop = true fatures
+ */
+void shutdownPermanentFeatures();
+
+/**
+ * Deletes all feature factories
+ */
+void shutdownFeatureFactories();
+
+/**
+ * Increments feature index until featureFactories.size() than reinitialise it at 0
+ */
+void nextFeature();
+
+/**
+ * Sets up all buttons
  */
 void setUpButtons();
 
 /**
- * Tick all buttons from OneButton.h
+ * Tick all buttons
  */
 void tickButtons();
 
 /**
  * Called on home button click
  */
-void onHomeClick();
+void onHomeButtonClick();
 
 /**
  * Called on home button double click
- * @method onHomeDoubleClick
  */
-void onHomeDoubleClick();
+void onHomeButtonDoubleClick();
 
 /**
  * Called on up button click
- * @method onRstClick
  */
 void onUpButtonClick();
 
@@ -63,8 +89,13 @@ void onUpButtonClick();
 void onUpButtonDoubleClick();
 
 /**
- * Increments feature index until featureFactories.size() than reinitialise it at 0
+ * Called on power button click
  */
-void nextFeature();
+void onPowerButtonClick();
+
+/**
+ * Called on power button long click
+ */
+void onPowerButtonLongClick();
 
 #endif
