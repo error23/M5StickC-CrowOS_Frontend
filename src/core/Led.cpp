@@ -23,6 +23,7 @@ namespace CrowOs {
 		 */
 		void Led::setUp() {
 
+			if(LOG_INFO) Serial.println("Info : [Led] Setup ...");
 			pinMode(LED_PIN, OUTPUT);
 			off();
 			if(LOG_INFO) Serial.println("Info : [Led] Setup Done");

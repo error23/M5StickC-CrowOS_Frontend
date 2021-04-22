@@ -22,6 +22,7 @@ namespace CrowOs {
 		 */
 		void Screen::setUp() {
 
+			if(LOG_INFO) Serial.println("Info : [Screen] Setup ...");
 			M5.Axp.ScreenBreath(brightness);
 			clearLCD();
 			if(LOG_INFO) Serial.println("Info : [Screen] Setup Done");

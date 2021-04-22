@@ -171,6 +171,7 @@ void setUpPermanentFeatures() {
 void shutdownPermanentFeatures() {
 
 	for(auto& permanentFeature : permanentFeatures) {
+		permanentFeature->onStop(&FeatureFactory::featureFactories[currentFeatureIndex].second);
 		delete permanentFeature;
 	}
 	if(LOG_INFO) Serial.println("Info : [Main] shutdownPermanentFeatures Done");

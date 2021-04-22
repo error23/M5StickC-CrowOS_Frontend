@@ -33,6 +33,7 @@ namespace CrowOs {
 		 */
 		void Time::setUp() {
 
+			if(LOG_INFO) Serial.println("Info : [Time] Setup ...");
 			M5.Rtc.SetTime(&upTime);
 			updateLastActiveTime(upTime);
 			if(LOG_INFO) Serial.println("Info : [Time] Setup Done");
