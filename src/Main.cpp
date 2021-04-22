@@ -66,7 +66,7 @@ void loop() {
 	timeHelper.limitFps();
 	tickButtons();
 
-	if(timeHelper.shouldSleep()) {
+	if(timeHelper.shouldSleep() || sleeping) {
 		sleep();
 	}
 	else {
@@ -110,6 +110,8 @@ void shutdown() {
 	shutdownFeatureFactories();
 
 	if(LOG_INFO) Serial.println("Info : [Main] shutdown Done");
+	delay(50);
+	M5.Axp.PowerOff();
 }
 
 /**
@@ -118,9 +120,15 @@ void shutdown() {
 void sleep() {
 
 	if(LOG_INFO) Serial.println("Info : [Main] sleep");
-	if(sleeping) return; // TODO: if it works delay
+
+	if(sleeping) {
+		delay(500);
+		if(LOG_DEBUG) Serial.println("Debug : [Main] sleep delay = 500 ms");
+		return;
+	}
 
 	sleeping = true;
+	if(LOG_DEBUG) Serial.println("Debug : [Main] sleep sleeping = true");
 	M5.Axp.SetSleep();
 }
 
@@ -228,10 +236,11 @@ void tickButtons() {
 	homeButton.tick();
 	upButton.tick();
 
-	if(M5.Axp.GetBtnPress() == 0x2) {
+	uint8_t event = M5.Axp.GetBtnPress();
+	if(event == 0x01) {
 		onPowerButtonLongClick();
 	}
-	else if(M5.Axp.GetBtnPress()) {
+	else if(event == 0x02) {
 		onPowerButtonClick();
 	}
 }
