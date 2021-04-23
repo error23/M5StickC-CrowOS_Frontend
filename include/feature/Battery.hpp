@@ -3,7 +3,7 @@
 
 // local Includes
 #include "core/Feature.hpp"
-#include "resources/battery.hpp"
+#include "resources/r_battery.hpp"
 
 namespace CrowOs {
 	namespace Feature {

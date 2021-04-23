@@ -8,7 +8,7 @@
 #include "Defines.hpp"
 
 // Resource includes
-#include "resources/logo.hpp"
+#include "resources/r_logo.hpp"
 
 namespace CrowOs {
 	namespace Core {
