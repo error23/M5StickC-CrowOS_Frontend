@@ -126,7 +126,7 @@ namespace CrowOs {
 
 			double limitFpsElipsed = now - limitFpsLastTime; // calculate elipsed since last method call
 			limitFpsLastTime = now; // update last method call
-			double limitFpsDelta = ceil((maxFrameInterval - limitFpsElipsed) * 0.5); // calculate delta between maxFrameInterval and last method call
+			double limitFpsDelta = floor((maxFrameInterval - limitFpsElipsed) * 0.5); // calculate delta between maxFrameInterval and last method call
 
 			if(limitFpsDelta > 0) {
 				delay(limitFpsDelta);
