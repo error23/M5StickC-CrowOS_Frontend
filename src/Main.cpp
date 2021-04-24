@@ -21,6 +21,9 @@ Led ledHelper;
 /** Screen helper */
 Screen screenHelper;
 
+/** SmartWifi helper */
+SmartWifi smartWifi;
+
 /** List of permanent features **/
 std::vector<Feature*> permanentFeatures;
 
@@ -51,6 +54,7 @@ void setup() {
 	timeHelper.setUp();
 	ledHelper.setUp();
 	setUpButtons();
+	smartWifi.setUp();
 
 	initialiseFeatureFactories();
 	setUpPermanentFeatures();
@@ -70,6 +74,11 @@ void loop() {
 		sleep();
 	}
 	else {
+
+		// Checks wifi status and try to reconnect it if is not connected
+		if(!smartWifi.checkStatus()) {
+			smartWifi.reconnect();
+		}
 
 		// loop permanent features
 		for(auto& feature : permanentFeatures) {
@@ -105,9 +114,13 @@ void loop() {
  */
 void shutdown() {
 
+	if(LOG_INFO) Serial.println("Info : [Main] shutdown ...");
+
+	// TODO : call currentFeature.onStop()
 	delete currentFeature;
 	shutdownPermanentFeatures();
 	shutdownFeatureFactories();
+	smartWifi.disconnect();
 
 	if(LOG_INFO) Serial.println("Info : [Main] shutdown Done");
 	delay(50);
@@ -130,6 +143,7 @@ void sleep() {
 	sleeping = true;
 	if(LOG_DEBUG) Serial.println("Debug : [Main] sleep sleeping = true");
 	M5.Axp.SetSleep();
+	smartWifi.disconnect();
 }
 
 /**
@@ -143,6 +157,7 @@ void wakeUp() {
 	timeHelper.keepWokedUp();
 	M5.Axp.begin();
 	M5.Lcd.setSwapBytes(true);
+	smartWifi.connect();
 
 	sleeping = false;
 }

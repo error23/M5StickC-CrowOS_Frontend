@@ -11,6 +11,7 @@
 #include "core/FeatureFactory.hpp"
 #include "core/Led.hpp"
 #include "core/Screen.hpp"
+#include "core/SmartWifi.hpp"
 #include "core/Time.hpp"
 
 /**
