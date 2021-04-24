@@ -13,7 +13,7 @@ OneButton homeButton(BUTTON_A_PIN, true);
 OneButton upButton(BUTTON_B_PIN, true);
 
 /** Time helper */
-Time timeHelper(60, 25);
+Time timeHelper(60, 30);
 
 /** Led helper */
 Led ledHelper;
@@ -152,6 +152,8 @@ void wakeUp() {
  */
 void setUpPermanentFeatures() {
 
+	if(LOG_INFO) Serial.println("Info : [Main] setUpPermanentFeatures ...");
+
 	for(auto& featureFactorySavedDataPair : FeatureFactory::featureFactories) {
 		if(featureFactorySavedDataPair.first->isAlwaysLoop()) {
 
@@ -163,6 +165,8 @@ void setUpPermanentFeatures() {
 			if(LOG_DEBUG) Serial.printf("Debug : [Main] setUpPermanentFeatures %s added to permanentFeatures actualSize = %d\n", permanentFeature->getFeatureName(), permanentFeatures.size());
 		}
 	}
+
+	if(LOG_INFO) Serial.println("Info : [Main] setUpPermanentFeatures Done");
 }
 
 /**
