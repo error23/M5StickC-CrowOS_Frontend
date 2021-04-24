@@ -87,13 +87,13 @@ namespace CrowOs {
 		 */
 		void Battery::updateBatteryLevel() {
 
-			level = (int)(((voltage - 3.0) / (4.15 - 3.0)) * 100);
+			level = (int)(((voltage - 3.0) / (4.145 - 3.0)) * 100);
 
 			if(current > 0) {
-				level = (int)(((voltage - 3.0) / (4.19 - 3.0)) * 100);
+				level = (int)(((voltage - 3.0) / (4.198 - 3.0)) * 100);
 			}
-			else if(current < 0) {
-				level = (int)(((voltage - 3.0) / (4.15 - 3.0)) * 100);
+			else if(current == 0) {
+				level = (int)(((voltage - 3.0) / (4.179 - 3.0)) * 100);
 			}
 		}
 
