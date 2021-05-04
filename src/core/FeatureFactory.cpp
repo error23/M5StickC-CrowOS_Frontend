@@ -70,5 +70,23 @@ namespace CrowOs {
 			return alwaysLoop;
 		}
 
+		/**
+		 * Gets the feature factory id in database
+		 *
+		 * @return feature featureFactoryName id
+		 */
+		const long FeatureFactory::getFeatureId() const {
+			return m_id;
+		}
+
+		/**
+		 * Sets feature factory id in database
+		 *
+		 * @param id to be set
+		 */
+		void FeatureFactory::setFeatureId(long id) {
+			m_id = id;
+		}
+
 	} // namespace Core
 } // namespace CrowOs

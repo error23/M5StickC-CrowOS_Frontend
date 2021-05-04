@@ -24,9 +24,6 @@ namespace CrowOs {
 			/** Feature name */
 			const char* featureName;
 
-			/** Feature id */
-			long m_id;
-
 		public:
 			/**
 			 * Initialise new feature
@@ -88,20 +85,6 @@ namespace CrowOs {
 			 * @return featureName
 			 */
 			const char* getFeatureName() const;
-
-			/**
-			 * Gets the feature id in database
-			 *
-			 * @return feature id
-			 */
-			const long getFeatureId() const;
-
-			/**
-			 * Sets feature id in database
-			 *
-			 * @param id id to be set
-			 */
-			void setFeatureId(long id);
 		};
 
 	} // namespace Core

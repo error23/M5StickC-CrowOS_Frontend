@@ -27,6 +27,9 @@ namespace CrowOs {
 		class FeatureFactory {
 
 		private:
+			/** Feature factory id */
+			long m_id;
+
 			/** Feature factory name */
 			const char* featureFactoryName;
 
@@ -68,6 +71,20 @@ namespace CrowOs {
 			 * @return Feature* your feature
 			 */
 			virtual Feature* createFeature() = 0;
+
+			/**
+			 * Gets the feature factory id in database
+			 *
+			 * @return feature featureFactoryName id
+			 */
+			const long getFeatureId() const;
+
+			/**
+			 * Sets feature factory id in database
+			 *
+			 * @param id to be set
+			 */
+			void setFeatureId(long id);
 
 			/**
 			 * Indicates if feature made by this factory should be always in a main loop
