@@ -24,6 +24,9 @@ Screen screenHelper;
 /** SmartWifi helper */
 SmartWifi smartWifi;
 
+/** Web client helper */
+WebClient webClient(BACKEND_HOST, BACKEND_PORT, BACKEND_USER_USERNAME, BACKEND_USER_PASSWORD, BACKEND_BASE_PATH);
+
 /** List of permanent features **/
 std::vector<Feature*> permanentFeatures;
 

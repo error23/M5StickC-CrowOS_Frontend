@@ -13,6 +13,7 @@
 #include "core/Screen.hpp"
 #include "core/SmartWifi.hpp"
 #include "core/Time.hpp"
+#include "core/WebClient.hpp"
 
 /**
  * Main setUp method
