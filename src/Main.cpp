@@ -60,6 +60,7 @@ void setup() {
 	smartWifi.setUp();
 
 	initialiseFeatureFactories();
+	initialiseFeatureData();
 	setUpPermanentFeatures();
 
 	if(LOG_INFO) Serial.println("Info : [Main] Setup Done");
@@ -79,9 +80,7 @@ void loop() {
 	else {
 
 		// Checks wifi status and try to reconnect it if is not connected
-		if(!smartWifi.checkStatus()) {
-			smartWifi.reconnect();
-		}
+		if(!smartWifi.checkStatus()) smartWifi.reconnect();
 
 		// loop permanent features
 		for(auto& feature : permanentFeatures) {
@@ -96,13 +95,42 @@ void loop() {
 
 				// kill current feature if exists
 				if(currentFeature != NULL) {
-					currentFeature->onStop(&FeatureFactory::featureFactories[currentFeatureIndex].second);
+
+					// Deserialise saved data into json document
+					DynamicJsonDocument json(MAX_JSON_DOCUMENT_SIZE);
+					deserializeJson(json, FeatureFactory::featureFactories[currentFeatureIndex].second);
+					if(LOG_DEBUG) Serial.printf("Debug : [Main] loop retrieve second = %s\n", FeatureFactory::featureFactories[currentFeatureIndex].second.c_str());
+
+					// Stop feature
+					currentFeature->onStop(&json);
+
+					// Serialize json document into saved data
+					String s;
+					serializeJson(json, s);
+					FeatureFactory::featureFactories[currentFeatureIndex].second = s;
+					if(LOG_DEBUG) Serial.printf("Debug : [Main] loop save second = %s\n", FeatureFactory::featureFactories[currentFeatureIndex].second.c_str());
+
+					// kill current feature
 					delete currentFeature;
 				}
 
 				// start new feature
 				currentFeature = FeatureFactory::featureFactories[newFeatureIndex].first->createFeature();
-				currentFeature->onStart(&screenHelper, &timeHelper, &ledHelper, &FeatureFactory::featureFactories[newFeatureIndex].second);
+
+				// if there is no saved data start feature with null
+				if(FeatureFactory::featureFactories[newFeatureIndex].second == NULL) {
+					if(LOG_DEBUG) Serial.println("Debug : [Main] loop new second = NULL");
+
+					currentFeature->onStart(&screenHelper, &timeHelper, &ledHelper, NULL);
+				}
+				// Else deserialise json document and start feature with it
+				else {
+					DynamicJsonDocument json(MAX_JSON_DOCUMENT_SIZE);
+					deserializeJson(json, FeatureFactory::featureFactories[newFeatureIndex].second);
+					if(LOG_DEBUG) Serial.printf("Debug : [Main] loop retrieve new second = %s\n", FeatureFactory::featureFactories[newFeatureIndex].second.c_str());
+					currentFeature->onStart(&screenHelper, &timeHelper, &ledHelper, &json);
+				}
+
 				currentFeatureIndex = newFeatureIndex;
 			}
 
@@ -121,6 +149,7 @@ void shutdown() {
 
 	// TODO : call currentFeature.onStop()
 	delete currentFeature;
+
 	shutdownPermanentFeatures();
 	shutdownFeatureFactories();
 	smartWifi.disconnect();
@@ -166,6 +195,29 @@ void wakeUp() {
 }
 
 /**
+ * Initialise feature saved data from the server
+ */
+void initialiseFeatureData() {
+
+	if(LOG_INFO) Serial.println("Info : [Main] initialiseFeatureData ...");
+
+	for(auto& featureFactorySavedDataPair : FeatureFactory::featureFactories) {
+		//*((char*)featureFactorySavedDataPair.second) = &"{\"test\":\"321\"}";
+	}
+
+	if(LOG_INFO) Serial.println("Info : [Main] initialiseFeatureData Done");
+}
+
+/**
+ * Sends feature saved data to the server
+ */
+void saveFeatureDataToServer() {
+
+	if(LOG_INFO) Serial.println("Info : [Main] saveFeatureDataToServer ...");
+	if(LOG_INFO) Serial.println("Info : [Main] saveFeatureDataToServer Done");
+}
+
+/**
  * Sets up alwaysLoop = true features
  */
 void setUpPermanentFeatures() {
@@ -191,9 +243,13 @@ void setUpPermanentFeatures() {
  * Deletes all alwaysLoop = true fatures
  */
 void shutdownPermanentFeatures() {
+	if(LOG_INFO) Serial.println("Info : [Main] shutdownPermanentFeatures ...");
 
 	for(auto& permanentFeature : permanentFeatures) {
-		permanentFeature->onStop(&FeatureFactory::featureFactories[currentFeatureIndex].second);
+
+		DynamicJsonDocument json(1024);
+		permanentFeature->onStop(&json);
+
 		delete permanentFeature;
 	}
 	if(LOG_INFO) Serial.println("Info : [Main] shutdownPermanentFeatures Done");
@@ -203,6 +259,8 @@ void shutdownPermanentFeatures() {
  * Deletes all feature factories
  */
 void shutdownFeatureFactories() {
+
+	if(LOG_INFO) Serial.println("Info : [Main] shutdownFeatureFactories ...");
 
 	for(auto& featureFactorySavedDataPair : FeatureFactory::featureFactories) {
 		if(featureFactorySavedDataPair.first != NULL) delete featureFactorySavedDataPair.first;
@@ -237,6 +295,8 @@ void nextFeature() {
  * Sets up all buttons
  */
 void setUpButtons() {
+
+	if(LOG_INFO) Serial.println("Info : [Main] setUpButtons ...");
 
 	homeButton.attachClick(onHomeButtonClick);
 	homeButton.attachDoubleClick(onHomeButtonDoubleClick);

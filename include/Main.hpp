@@ -41,6 +41,16 @@ void sleep();
 void wakeUp();
 
 /**
+ * Initialise feature saved data from the server
+ */
+void initialiseFeatureData();
+
+/**
+ * Sends feature saved data to the server
+ */
+void saveFeatureDataToServer();
+
+/**
  * Sets up alwaysLoop = true features
  */
 void setUpPermanentFeatures();
