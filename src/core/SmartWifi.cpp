@@ -75,6 +75,26 @@ namespace CrowOs {
 		}
 
 		/**
+		 * Wait for connection for 130000ms than fail
+		 */
+		const bool SmartWifi::waitUntilReconnect() {
+
+			unsigned long now = millis();
+
+			while(!checkStatus()) {
+
+				reconnect();
+				if(millis() - now >= 130000) {
+					if(LOG_INFO) Serial.println("Info : [SmartWifi] waitUntilReconnect failed");
+					return false;
+				}
+			}
+
+			if(LOG_INFO) Serial.println("Info : [SmartWifi] waitUntilReconnect OK");
+			return true;
+		}
+
+		/**
 		 * Checks wifi status and shows wifi icon on the screen
 		 *
 		 * @return true if wifi is connected

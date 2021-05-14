@@ -60,6 +60,11 @@ namespace CrowOs {
 			void reconnect();
 
 			/**
+			 * Wait for connection for 130000ms than fail
+			 */
+			const bool waitUntilReconnect();
+
+			/**
 			 * Checks wifi status and shows wifi icon on the screen
 			 *
 			 * @return true if wifi is connected
