@@ -117,18 +117,22 @@ namespace CrowOs {
 			case WL_SCAN_COMPLETED:
 				M5.Lcd.pushImage(2, 2, 16, 10, res_wifi_connecting);
 				return false;
+				break;
 
 			case WL_CONNECTED:
 				M5.Lcd.pushImage(2, 2, 16, 10, res_wifi_connected);
 				return true;
+				break;
 
 			case WL_DISCONNECTED:
 				M5.Lcd.pushImage(2, 2, 16, 10, res_wifi_disconnected);
 				return false;
+				break;
 
 			default:
 				M5.Lcd.pushImage(2, 2, 16, 10, res_wifi_error);
 				return false;
+				break;
 			}
 		}
 
