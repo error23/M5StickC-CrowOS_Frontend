@@ -8,7 +8,7 @@ namespace CrowOs {
 	namespace Core {
 
 		// Initialise static featureFactories
-		std::vector<std::pair<FeatureFactory*, void*>> FeatureFactory::featureFactories;
+		std::vector<std::pair<FeatureFactory*, String>> FeatureFactory::featureFactories;
 
 		/**
 		 * Initialise Feature factory
@@ -21,7 +21,7 @@ namespace CrowOs {
 			, alwaysLoop(alwaysLoop) {
 			if(LOG_INFO) Serial.printf("Info : [FeatureFactory] %s created with alwaysLoop = %d\n", featureFactoryName, alwaysLoop);
 
-			featureFactories.push_back({this, NULL});
+			featureFactories.push_back({this, "\0"});
 			if(LOG_DEBUG) Serial.printf("Debug : [FeatureFactory] %s added to featureFactories actualSize = %d\n", featureFactoryName, featureFactories.size());
 		}
 
@@ -32,7 +32,7 @@ namespace CrowOs {
 
 			featureFactories.erase(std::remove_if(featureFactories.begin(),
 												  featureFactories.end(),
-												  [this](std::pair<FeatureFactory*, void*> pair) {
+												  [this](std::pair<FeatureFactory*, String> pair) {
 													  if(hasSameName(pair.first)) {
 
 														  if(LOG_DEBUG) Serial.printf("Debug : [FeatureFactory] %s removed from featureFactories", featureFactoryName);

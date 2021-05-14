@@ -46,7 +46,7 @@ namespace CrowOs {
 
 		public:
 			/** Feature factories static holder */
-			static std::vector<std::pair<FeatureFactory*, void*>> featureFactories;
+			static std::vector<std::pair<FeatureFactory*, String>> featureFactories;
 
 			/**
 			 * Initialise Feature factory
