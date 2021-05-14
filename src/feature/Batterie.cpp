@@ -24,18 +24,14 @@ namespace CrowOs {
 
 		/**
 		 * Called after Feature creation before loop when state changes to this feature
-		 * You should initialise all your variables here and restore savedData to your class it savedData is not null
-		 * Ex :
-		 * 	if(savedData != NULL) {
-		 *		savedInteger = *((int*)savedData);
-		 *	}
+		 * You should initialise all your variables here and restore savedData to your class if savedData is not null
 		 *
 		 * @param screenHelper Screen helper used to manage screen
 		 * @param timeHelper   Time helper used to manage upTime and sleepTime
 		 * @param ledHelper    Led helper used to manage Led state
 		 * @param savedData    pointer to feature persistent data
 		 */
-		void Battery::onStart(Core::Screen* screenHelper, Core::Time* timeHelper, Core::Led* ledHelper, void* savedData) {
+		void Battery::onStart(Core::Screen* screenHelper, Core::Time* timeHelper, Core::Led* ledHelper, DynamicJsonDocument* savedData) {
 
 			if(LOG_INFO) Serial.println("Info : [Battery] onStart");
 			screen = screenHelper;
@@ -45,13 +41,10 @@ namespace CrowOs {
 		/**
 		 * Called before Feature destroying after loop when state changes from this feature to another
 		 * You should destroy all your variables here and save the persistent one into savedData pointer
-		 * Ex :
-		 * delete pointer;
-		 * *((int*)savedData) = savedInteger;
 		 *
-		 * @param  savedData pointer to feature persistent data
+		 * @param savedData pointer to feature persistent data
 		 */
-		void Battery::onStop(void* savedData) {
+		void Battery::onStop(DynamicJsonDocument* savedData) {
 			if(LOG_INFO) Serial.println("Info : [Battery] onStop");
 		}
 
