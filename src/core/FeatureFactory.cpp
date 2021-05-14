@@ -17,7 +17,8 @@ namespace CrowOs {
 		 * @param alwaysLoop         indicates if feature made by this factory should be always in a main loop default false
 		 */
 		FeatureFactory::FeatureFactory(const char* featureFactoryName, const bool alwaysLoop /* = false */)
-			: featureFactoryName(featureFactoryName)
+			: m_id(-1)
+			, featureFactoryName(featureFactoryName)
 			, alwaysLoop(alwaysLoop) {
 
 			if(LOG_INFO) Serial.printf("Info : [FeatureFactory] %s created with alwaysLoop = %d\n", featureFactoryName, alwaysLoop);
