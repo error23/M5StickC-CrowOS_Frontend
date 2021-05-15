@@ -118,7 +118,6 @@ namespace CrowOs {
 				snprintf(output, sizeof output, "  %d%%", level);
 			}
 
-			screen->clearText(sizeof output, x - 27, y + 2);
 			screen->printText(getBatteryLevelColor(), output, x - 27, y + 2);
 		}
 
