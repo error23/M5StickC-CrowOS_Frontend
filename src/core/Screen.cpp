@@ -12,7 +12,9 @@ namespace CrowOs {
 		 */
 		Screen::Screen()
 			: backgroundColor(TFT_BLACK)
-			, brightness(15) {
+			, brightness(15)
+			, m_errorDelay(0)
+			, errorMessage("\0") {
 
 			if(LOG_INFO) Serial.println("Info : [Screen] created with backgroundColor = TFT_BLACK");
 		}
@@ -26,6 +28,37 @@ namespace CrowOs {
 			M5.Axp.ScreenBreath(brightness);
 			clearLCD();
 			if(LOG_INFO) Serial.println("Info : [Screen] Setup Done");
+		}
+
+		/**
+		 * Screen loop method
+		 */
+		void Screen::loop() {
+
+			unsigned int now = millis();
+
+			if(m_errorDelay > now) {
+
+				if(LOG_INFO) Serial.printf("Info : [Screen] loop show error message = %s for delay = %d ms\n", errorMessage, m_errorDelay - now);
+
+				M5.Lcd.setTextColor(TFT_BLACK, TFT_RED);
+				M5.Lcd.setCursor(2, 152);
+				M5.Lcd.print(errorMessage);
+
+				int emptySize = 15 - strlen(errorMessage);
+				char emptyBuff[emptySize];
+				for(int i = 0; i < emptySize - 1; i++) {
+					emptyBuff[i] = ' ';
+				}
+				emptyBuff[emptySize - 1] = '\0';
+				M5.Lcd.print(emptyBuff);
+			}
+			else if(errorMessage[0] != '\0') {
+
+				if(LOG_INFO) Serial.printf("Info : [Screen] loop hide error message = %s\n", errorMessage);
+				clearText(15, 2, 152);
+				errorMessage[0] = '\0';
+			}
 		}
 
 		/**
@@ -93,6 +126,17 @@ namespace CrowOs {
 			clearLCD();
 			M5.Lcd.pushImage(2, 8, 79, 144, res_logo);
 			if(LOG_DEBUG) Serial.println("Debug : [Screen] showLogo at x = 2, y = 8, w = 79, h = 144");
+		}
+
+		/**
+		 * Shows error at the screen
+		 *
+		 * @param errorText  error message to show
+		 * @param errorDelay time that message will be showen in ms
+		 */
+		void Screen::showError(const char* errorText, const unsigned int errorDelay) {
+			strncpy(errorMessage, errorText, 15);
+			m_errorDelay = millis() + errorDelay;
 		}
 
 		/**

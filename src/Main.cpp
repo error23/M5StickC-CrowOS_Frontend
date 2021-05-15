@@ -102,6 +102,7 @@ void loop() {
 			if(currentFeature != NULL) currentFeature->loop();
 		}
 	}
+	screenHelper.loop();
 }
 
 /**

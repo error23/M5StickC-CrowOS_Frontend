@@ -27,6 +27,12 @@ namespace CrowOs {
 			/** Current brightness */
 			short brightness;
 
+			/** Error showing delay */
+			unsigned int m_errorDelay;
+
+			/** Error message showing actually on the screen */
+			char errorMessage[15];
+
 		public:
 			/**
 			 * Initialise screen
@@ -37,6 +43,11 @@ namespace CrowOs {
 			 * Set up Screen helper
 			 */
 			void setUp();
+
+			/**
+			 * Screen loop method
+			 */
+			void loop();
 
 			/**
 			 * Prints text on the screen
@@ -73,6 +84,14 @@ namespace CrowOs {
 			 * Shows crow logo
 			 */
 			void showLogo() const;
+
+			/**
+			 * Shows error at the screen
+			 *
+			 * @param errorText  error message to show
+			 * @param errorDelay time that message will be showen in ms
+			 */
+			void showError(const char* errorText, const unsigned int errorDelay);
 
 			/**
 			 * Changes current brightness
