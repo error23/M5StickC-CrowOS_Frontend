@@ -54,8 +54,8 @@ namespace CrowOs {
 		 */
 		void Battery::loop() {
 
-			voltage = M5.Axp.GetBatVoltage();
-			current = M5.Axp.GetBatCurrent();
+			if(M5.Axp.GetBatVoltage() > 0) voltage = (voltage + M5.Axp.GetBatVoltage()) / 2;
+			current = (current + M5.Axp.GetBatCurrent()) / 2;
 			updateBatteryLevel();
 			showBatteryLevel();
 			blinkLedWarning();
@@ -80,13 +80,14 @@ namespace CrowOs {
 		 */
 		void Battery::updateBatteryLevel() {
 
-			level = (int)(((voltage - 3.0) / (4.145 - 3.0)) * 100);
-
 			if(current > 0) {
-				level = (int)(((voltage - 3.0) / (4.198 - 3.0)) * 100);
+				level = (int)((level + (((voltage - 3.0) / (4.198 - 3.0)) * 100)) / 2);
 			}
 			else if(current == 0) {
-				level = (int)(((voltage - 3.0) / (4.179 - 3.0)) * 100);
+				level = (int)((level + (((voltage - 3.0) / (4.179 - 3.0)) * 100)) / 2);
+			}
+			else {
+				level = (int)((level + (((voltage - 3.0) / (4.145 - 3.0)) * 100)) / 2);
 			}
 		}
 
