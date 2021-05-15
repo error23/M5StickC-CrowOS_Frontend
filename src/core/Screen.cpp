@@ -12,7 +12,7 @@ namespace CrowOs {
 		 */
 		Screen::Screen()
 			: backgroundColor(TFT_BLACK)
-			, brightness(15)
+			, brightness(10)
 			, m_errorDelay(0)
 			, errorMessage("\0") {
 

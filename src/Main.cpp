@@ -114,7 +114,7 @@ void shutdown() {
 	screenHelper.showLogo();
 
 	killCurrentFeature();
-	saveFeatureDataToServer();
+	saveFeatureDataToServer(true);
 	shutdownPermanentFeatures();
 	shutdownFeatureFactories();
 	smartWifi.disconnect();
@@ -139,6 +139,7 @@ void sleep() {
 
 	sleeping = true;
 	if(LOG_DEBUG) Serial.println("Debug : [Main] sleep sleeping = true");
+	saveFeatureDataToServer(false);
 	M5.Axp.SetSleep();
 	smartWifi.disconnect();
 }
@@ -154,6 +155,7 @@ void wakeUp() {
 	timeHelper.keepWokedUp();
 	M5.Axp.begin();
 	M5.Lcd.setSwapBytes(true);
+	screenHelper.setUp();
 	smartWifi.connect();
 
 	sleeping = false;
@@ -166,10 +168,18 @@ void initialiseFeatureData() {
 
 	if(LOG_INFO) Serial.println("Info : [Main] initialiseFeatureData ...");
 
-	if(!smartWifi.waitUntilReconnect()) return;
+	if(!smartWifi.waitUntilReconnect()) {
+		screenHelper.showError("Init failed !!", 10000);
+		return;
+	}
 
 	DynamicJsonDocument responseBody(MAX_JSON_DOCUMENT_SIZE * (FeatureFactory::featureFactories.size() + 1));
-	webClient.sendGET("featureData", responseBody);
+	int status = webClient.sendGET("featureData", responseBody);
+	if(status != 200) {
+		char err[15];
+		sprintf(err, "server er:%d", status);
+		screenHelper.showError(err, 10000);
+	}
 
 	JsonArray featureDataDtos = responseBody.as<JsonArray>();
 
@@ -197,12 +207,17 @@ void initialiseFeatureData() {
 
 /**
  * Sends feature saved data to the server
+ *
+ * @param waitForConnection if true method will call SmartWifi::waitUntilReconnect() method in the begining
  */
-void saveFeatureDataToServer() {
+void saveFeatureDataToServer(boolean waitForConnection) {
 
 	if(LOG_INFO) Serial.println("Info : [Main] saveFeatureDataToServer ...");
 
-	if(!smartWifi.waitUntilReconnect()) return;
+	if(waitForConnection && !smartWifi.waitUntilReconnect()) {
+		screenHelper.showError("Init failed !!", 10000);
+		return;
+	}
 
 	DynamicJsonDocument payload(MAX_JSON_DOCUMENT_SIZE * (FeatureFactory::featureFactories.size() + 1));
 	JsonArray featureDataDtos = payload.to<JsonArray>();
@@ -222,7 +237,13 @@ void saveFeatureDataToServer() {
 	}
 
 	DynamicJsonDocument responseBody(MAX_JSON_DOCUMENT_SIZE * (FeatureFactory::featureFactories.size() + 1));
-	webClient.sendPUT("featureData", payload, responseBody);
+	int status = webClient.sendPUT("featureData", payload, responseBody);
+	if(status != 202) {
+		char err[15];
+		sprintf(err, "server er:%d", status);
+		screenHelper.showError(err, 10000);
+		screenHelper.loop();
+	}
 
 	if(LOG_INFO) Serial.println("Info : [Main] saveFeatureDataToServer Done");
 }

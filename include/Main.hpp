@@ -47,8 +47,10 @@ void initialiseFeatureData();
 
 /**
  * Sends feature saved data to the server
+ *
+ * @param waitForConnection if true method will call SmartWifi::waitUntilReconnect() method in the begining
  */
-void saveFeatureDataToServer();
+void saveFeatureDataToServer(boolean waitForConnection);
 
 /**
  * Sets up alwaysLoop = true features
