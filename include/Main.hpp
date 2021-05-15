@@ -71,6 +71,19 @@ void shutdownFeatureFactories();
 void nextFeature();
 
 /**
+ * Starts new feature from featureFactories
+ *
+ * @param featureIndex featureFactories index of feature to start
+ * @return started feature
+ */
+CrowOs::Core::Feature* startFeature(const int featureIndex);
+
+/**
+ * Kill current feature
+ */
+void killCurrentFeature();
+
+/**
  * Sets up all buttons
  */
 void setUpButtons();

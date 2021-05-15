@@ -93,44 +93,8 @@ void loop() {
 			// switch normal feature if index has changed
 			if(newFeatureIndex != currentFeatureIndex) {
 
-				// kill current feature if exists
-				if(currentFeature != NULL) {
-
-					// Deserialise saved data into json document
-					DynamicJsonDocument json(MAX_JSON_DOCUMENT_SIZE);
-					deserializeJson(json, FeatureFactory::featureFactories[currentFeatureIndex].second);
-					if(LOG_DEBUG) Serial.printf("Debug : [Main] loop retrieve second = %s\n", FeatureFactory::featureFactories[currentFeatureIndex].second.c_str());
-
-					// Stop feature
-					currentFeature->onStop(&json);
-
-					// Serialize json document into saved data
-					String s;
-					serializeJson(json, s);
-					FeatureFactory::featureFactories[currentFeatureIndex].second = s;
-					if(LOG_DEBUG) Serial.printf("Debug : [Main] loop save second = %s\n", FeatureFactory::featureFactories[currentFeatureIndex].second.c_str());
-
-					// kill current feature
-					delete currentFeature;
-				}
-
-				// start new feature
-				currentFeature = FeatureFactory::featureFactories[newFeatureIndex].first->createFeature();
-
-				// if there is no saved data start feature with null
-				if(FeatureFactory::featureFactories[newFeatureIndex].second == NULL) {
-					if(LOG_DEBUG) Serial.println("Debug : [Main] loop new second = NULL");
-
-					currentFeature->onStart(&screenHelper, &timeHelper, &ledHelper, NULL);
-				}
-				// Else deserialise json document and start feature with it
-				else {
-					DynamicJsonDocument json(MAX_JSON_DOCUMENT_SIZE);
-					deserializeJson(json, FeatureFactory::featureFactories[newFeatureIndex].second);
-					if(LOG_DEBUG) Serial.printf("Debug : [Main] loop retrieve new second = %s\n", FeatureFactory::featureFactories[newFeatureIndex].second.c_str());
-					currentFeature->onStart(&screenHelper, &timeHelper, &ledHelper, &json);
-				}
-
+				if(currentFeature != NULL) killCurrentFeature();
+				currentFeature = startFeature(newFeatureIndex);
 				currentFeatureIndex = newFeatureIndex;
 			}
 
@@ -146,16 +110,16 @@ void loop() {
 void shutdown() {
 
 	if(LOG_INFO) Serial.println("Info : [Main] shutdown ...");
+	screenHelper.showLogo();
 
-	// TODO : call currentFeature.onStop()
-	delete currentFeature;
-
+	killCurrentFeature();
+	saveFeatureDataToServer();
 	shutdownPermanentFeatures();
 	shutdownFeatureFactories();
 	smartWifi.disconnect();
 
 	if(LOG_INFO) Serial.println("Info : [Main] shutdown Done");
-	delay(50);
+	delay(100);
 	M5.Axp.PowerOff();
 }
 
@@ -201,8 +165,30 @@ void initialiseFeatureData() {
 
 	if(LOG_INFO) Serial.println("Info : [Main] initialiseFeatureData ...");
 
-	for(auto& featureFactorySavedDataPair : FeatureFactory::featureFactories) {
-		//*((char*)featureFactorySavedDataPair.second) = &"{\"test\":\"321\"}";
+	if(!smartWifi.waitUntilReconnect()) return;
+
+	DynamicJsonDocument responseBody(MAX_JSON_DOCUMENT_SIZE * (FeatureFactory::featureFactories.size() + 1));
+	webClient.sendGET("featureData", responseBody);
+
+	JsonArray featureDataDtos = responseBody.as<JsonArray>();
+
+	for(DynamicJsonDocument featureDataDto : featureDataDtos) {
+
+		for(auto& featureFactorySavedDataPair : FeatureFactory::featureFactories) {
+			if(featureFactorySavedDataPair.first->getFeatureFactoryName() == featureDataDto["featureFactoryName"]) {
+
+				featureFactorySavedDataPair.first->setFeatureFactoryId(featureDataDto["id"]);
+
+				String s = "\0";
+				if(!featureDataDto["savedData"].isNull()) {
+					serializeJson(featureDataDto["savedData"], s);
+				}
+
+				if(LOG_DEBUG) Serial.printf("Debug : [Main] initialiseFeatureData save second = %s for featureFactoryName = %s\n", s.c_str(), featureFactorySavedDataPair.first->getFeatureFactoryName());
+				featureFactorySavedDataPair.second = s;
+				break;
+			}
+		}
 	}
 
 	if(LOG_INFO) Serial.println("Info : [Main] initialiseFeatureData Done");
@@ -214,6 +200,29 @@ void initialiseFeatureData() {
 void saveFeatureDataToServer() {
 
 	if(LOG_INFO) Serial.println("Info : [Main] saveFeatureDataToServer ...");
+
+	if(!smartWifi.waitUntilReconnect()) return;
+
+	DynamicJsonDocument payload(MAX_JSON_DOCUMENT_SIZE * (FeatureFactory::featureFactories.size() + 1));
+	JsonArray featureDataDtos = payload.to<JsonArray>();
+
+	for(auto& featureFactorySavedDataPair : FeatureFactory::featureFactories) {
+
+		DynamicJsonDocument featureDataDto(MAX_JSON_DOCUMENT_SIZE);
+
+		if(featureFactorySavedDataPair.first->getFeatureFactoryId() != -1) featureDataDto["id"] = featureFactorySavedDataPair.first->getFeatureFactoryId();
+		featureDataDto["featureFactoryName"] = featureFactorySavedDataPair.first->getFeatureFactoryName();
+
+		DynamicJsonDocument savedData(MAX_JSON_DOCUMENT_SIZE);
+		deserializeJson(savedData, featureFactorySavedDataPair.second);
+		featureDataDto["savedData"] = savedData;
+
+		featureDataDtos.add(featureDataDto);
+	}
+
+	DynamicJsonDocument responseBody(MAX_JSON_DOCUMENT_SIZE * (FeatureFactory::featureFactories.size() + 1));
+	webClient.sendPUT("featureData", payload, responseBody);
+
 	if(LOG_INFO) Serial.println("Info : [Main] saveFeatureDataToServer Done");
 }
 
@@ -247,9 +256,7 @@ void shutdownPermanentFeatures() {
 
 	for(auto& permanentFeature : permanentFeatures) {
 
-		DynamicJsonDocument json(1024);
-		permanentFeature->onStop(&json);
-
+		permanentFeature->onStop(NULL);
 		delete permanentFeature;
 	}
 	if(LOG_INFO) Serial.println("Info : [Main] shutdownPermanentFeatures Done");
@@ -289,6 +296,57 @@ void nextFeature() {
 		Serial.printf("Debug : [Main] nextFeature newFeatureIndex = %d\n", newFeatureIndex);
 		Serial.printf("Debug : [Main] nextFeature featureFactories.size() = %d\n", FeatureFactory::featureFactories.size());
 	}
+}
+
+/**
+ * Starts new feature from featureFactories
+ *
+ * @param featureIndex featureFactories index of feature to start
+ * @return started feature
+ */
+Feature* startFeature(const int featureIndex) {
+
+	// start new feature
+	Feature* feature = FeatureFactory::featureFactories[featureIndex].first->createFeature();
+
+	// if there is no saved data start feature with null
+	if(FeatureFactory::featureFactories[featureIndex].second == NULL) {
+		if(LOG_DEBUG) Serial.printf("Debug : [Main] startFeature name = %s new second = NULL\n", feature->getFeatureName());
+
+		feature->onStart(&screenHelper, &timeHelper, &ledHelper, NULL);
+	}
+	// Else deserialise json document and start feature with it
+	else {
+		DynamicJsonDocument json(MAX_JSON_DOCUMENT_SIZE);
+		deserializeJson(json, FeatureFactory::featureFactories[featureIndex].second);
+		if(LOG_DEBUG) Serial.printf("Debug : [Main] startFeature name = %s retrieve new second = %s\n", feature->getFeatureName(), FeatureFactory::featureFactories[featureIndex].second.c_str());
+		feature->onStart(&screenHelper, &timeHelper, &ledHelper, &json);
+	}
+
+	return feature;
+}
+
+/**
+ * Kill current feature
+ */
+void killCurrentFeature() {
+
+	// Deserialise saved data into json document
+	DynamicJsonDocument json(MAX_JSON_DOCUMENT_SIZE);
+	deserializeJson(json, FeatureFactory::featureFactories[currentFeatureIndex].second);
+	if(LOG_DEBUG) Serial.printf("Debug : [Main] killCurrentFeature retrieve second = %s\n", FeatureFactory::featureFactories[currentFeatureIndex].second.c_str());
+
+	// Stop feature
+	currentFeature->onStop(&json);
+
+	// Serialize json document into saved data
+	String s;
+	serializeJson(json, s);
+	FeatureFactory::featureFactories[currentFeatureIndex].second = s;
+	if(LOG_DEBUG) Serial.printf("Debug : [Main] killCurrentFeature save second = %s\n", FeatureFactory::featureFactories[currentFeatureIndex].second.c_str());
+
+	// kill current feature
+	delete currentFeature;
 }
 
 /**
