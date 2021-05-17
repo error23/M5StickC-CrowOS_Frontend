@@ -18,6 +18,7 @@ namespace CrowOs {
 			, current(-1)
 			, level(-1)
 			, warningLevel(10)
+			, warning(false)
 			, chargingAnimationLevel(0)
 			, lastAnimationChange(0) {
 		}
@@ -124,14 +125,16 @@ namespace CrowOs {
 		/**
 		 * Blink led if battery is under warning level
 		 */
-		void Battery::blinkLedWarning() const {
+		void Battery::blinkLedWarning() {
 
 			if(level <= warningLevel) {
 				if(LOG_DEBUG) Serial.println("Debug : [Battery] blinkLedWarning");
+				warning = true;
 				led->blink(ANIMATION_DELAY);
 			}
-			else {
+			else if(warning) {
 				led->off();
+				warning = false;
 			}
 		}
 

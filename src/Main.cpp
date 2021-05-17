@@ -140,6 +140,7 @@ void sleep() {
 	sleeping = true;
 	if(LOG_DEBUG) Serial.println("Debug : [Main] sleep sleeping = true");
 	saveFeatureDataToServer(false);
+	killCurrentFeature();
 	M5.Axp.SetSleep();
 	smartWifi.disconnect();
 }
@@ -157,6 +158,7 @@ void wakeUp() {
 	M5.Lcd.setSwapBytes(true);
 	screenHelper.setUp();
 	smartWifi.connect();
+	startFeature(currentFeatureIndex);
 
 	sleeping = false;
 }

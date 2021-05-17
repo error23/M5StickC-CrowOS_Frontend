@@ -35,6 +35,9 @@ namespace CrowOs {
 			/** Battery warning level */
 			int warningLevel;
 
+			/** Indicates if battery charge is actually in warning */
+			bool warning;
+
 			/** Battery charging animation level */
 			int chargingAnimationLevel;
 
@@ -54,7 +57,7 @@ namespace CrowOs {
 			/**
 			 * Blink led if battery is under warning level
 			 */
-			void blinkLedWarning() const;
+			void blinkLedWarning();
 
 			/**
 			 * Animate battery icon while charging
