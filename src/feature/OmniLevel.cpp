@@ -1,5 +1,5 @@
 /**
- * Battery class implementation
+ * OmniLevel class implementation
  */
 #include "feature/OmniLevel.hpp"
 
