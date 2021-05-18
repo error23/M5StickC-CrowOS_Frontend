@@ -1,5 +1,6 @@
 #include "core/FeatureFactory.hpp"
 #include "feature/BatteryFactory.hpp"
+#include "feature/OmniLevelFactory.hpp"
 
 /**
  * Initialise all feature factories
@@ -9,5 +10,6 @@ void initialiseFeatureFactories() {
 
 	if(LOG_INFO) Serial.println("Info : [initialiseFeatureFactories] Initializing Factories ...");
 	new CrowOs::Feature::BatteryFactory();
+	new CrowOs::Feature::OmniLevelFactory();
 	if(LOG_INFO) Serial.println("Info : [initialiseFeatureFactories] Initializing Factories Done");
 }

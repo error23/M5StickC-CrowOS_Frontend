@@ -158,7 +158,7 @@ void wakeUp() {
 	M5.Lcd.setSwapBytes(true);
 	screenHelper.setUp();
 	smartWifi.connect();
-	startFeature(currentFeatureIndex);
+	currentFeature = startFeature(currentFeatureIndex);
 
 	sleeping = false;
 }
@@ -257,11 +257,13 @@ void setUpPermanentFeatures() {
 
 	if(LOG_INFO) Serial.println("Info : [Main] setUpPermanentFeatures ...");
 
-	for(auto& featureFactorySavedDataPair : FeatureFactory::featureFactories) {
-		if(featureFactorySavedDataPair.first->isAlwaysLoop()) {
+	for(int i = 0; i < FeatureFactory::featureFactories.size(); i++) {
+		if(FeatureFactory::featureFactories[i].first->isAlwaysLoop()) {
 
-			Feature* permanentFeature = featureFactorySavedDataPair.first->createFeature();
-			delete featureFactorySavedDataPair.first;
+			Feature* permanentFeature = FeatureFactory::featureFactories[i].first->createFeature();
+			delete FeatureFactory::featureFactories[i].first;
+			i--;
+
 			permanentFeature->onStart(&screenHelper, &timeHelper, &ledHelper, NULL);
 			permanentFeatures.push_back(permanentFeature);
 
@@ -293,8 +295,11 @@ void shutdownFeatureFactories() {
 
 	if(LOG_INFO) Serial.println("Info : [Main] shutdownFeatureFactories ...");
 
-	for(auto& featureFactorySavedDataPair : FeatureFactory::featureFactories) {
-		if(featureFactorySavedDataPair.first != NULL) delete featureFactorySavedDataPair.first;
+	for(int i = 0; i < FeatureFactory::featureFactories.size(); i++) {
+		if(FeatureFactory::featureFactories[i].first != NULL) {
+			delete FeatureFactory::featureFactories[i].first;
+			i--;
+		}
 	}
 
 	if(LOG_INFO) Serial.println("Info : [Main] shutdownFeatureFactories Done");
