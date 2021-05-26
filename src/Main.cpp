@@ -51,6 +51,7 @@ void setup() {
 	Serial.begin(115200);
 	M5.Axp.begin();
 	M5.Lcd.setSwapBytes(true);
+	M5.MPU6886.Init();
 	screenHelper.setUp();
 	screenHelper.showLogo();
 
