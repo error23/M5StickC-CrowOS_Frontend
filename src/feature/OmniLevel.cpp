@@ -38,6 +38,7 @@ namespace CrowOs {
 			time = timeHelper;
 
 			// Clear screen and show frame fro progress bar
+			screen->setScreenOrientation(Core::Screen::SCREEN_NORMAL_PORTRET);
 			screen->clearLCD();
 
 			// Get saved data
@@ -54,7 +55,7 @@ namespace CrowOs {
 
 			// Draw calibration instructions
 			screen->clearText(9, 15, 152);
-			screen->printText(CYAN, "Calibrate", 15, 152);
+			screen->printText("Calibrate", 15, 152, TFT_CYAN);
 		}
 
 		/**

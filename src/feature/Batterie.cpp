@@ -97,7 +97,7 @@ namespace CrowOs {
 		 */
 		void Battery::showBatteryLevel() {
 
-			int x = 60;
+			int x = screen->getMaxX() - 20;
 			int y = 2;
 
 			// Show icon
@@ -119,7 +119,7 @@ namespace CrowOs {
 				snprintf(output, sizeof output, "  %d%%", level);
 			}
 
-			screen->printText(getBatteryLevelColor(), output, x - 27, y + 2);
+			screen->printText(output, x - 27, y + 2, getBatteryLevelColor(), TFT_BLACK);
 		}
 
 		/**
@@ -142,7 +142,7 @@ namespace CrowOs {
 		 * Animate battery icon while charging
 		 *
 		 * @param x icon x position
-		 * @param y icon y position
+		 * @param y icon y posibackgroundTextColoition
 		 */
 		void Battery::animateCharging(const int x, const int y) {
 

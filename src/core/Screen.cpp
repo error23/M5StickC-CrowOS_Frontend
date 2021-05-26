@@ -12,11 +12,13 @@ namespace CrowOs {
 		 */
 		Screen::Screen()
 			: backgroundColor(TFT_BLACK)
+			, MIN_Y(15)
 			, brightness(10)
 			, m_errorDelay(0)
+			, screenOrientation(SCREEN_NORMAL_PORTRET)
 			, errorMessage("\0") {
 
-			if(LOG_INFO) Serial.println("Info : [Screen] created with backgroundColor = TFT_BLACK");
+			if(LOG_INFO) Serial.println("Info : [Screen] created with backgroundColor = TFT_BLACK, MIN_Y = 16, brightness = 10, screenOrientation = SCREEN_NORMAL_PORTRET");
 		}
 
 		/**
@@ -26,6 +28,7 @@ namespace CrowOs {
 
 			if(LOG_INFO) Serial.println("Info : [Screen] Setup ...");
 			M5.Axp.ScreenBreath(brightness);
+			M5.Lcd.setRotation(screenOrientation);
 			clearLCD();
 			if(LOG_INFO) Serial.println("Info : [Screen] Setup Done");
 		}
@@ -41,11 +44,9 @@ namespace CrowOs {
 
 				if(LOG_INFO) Serial.printf("Info : [Screen] loop show error message = %s for delay = %d ms\n", errorMessage, m_errorDelay - now);
 
-				M5.Lcd.setTextColor(TFT_BLACK, TFT_RED);
-				M5.Lcd.setCursor(2, 152);
-				M5.Lcd.print(errorMessage);
+				printText(errorMessage, 2, getMaxY() - 8, TFT_BLACK, TFT_RED);
 
-				int emptySize = 15 - strlen(errorMessage);
+				int emptySize = getMaxXCaracters() - strlen(errorMessage);
 				char emptyBuff[emptySize];
 				for(int i = 0; i < emptySize - 1; i++) {
 					emptyBuff[i] = ' ';
@@ -56,7 +57,7 @@ namespace CrowOs {
 			else if(errorMessage[0] != '\0') {
 
 				if(LOG_INFO) Serial.printf("Info : [Screen] loop hide error message = %s\n", errorMessage);
-				clearText(15, 2, 152);
+				clearText(getMaxXCaracters(), 2, getMaxY() - 8);
 				errorMessage[0] = '\0';
 			}
 		}
@@ -64,14 +65,21 @@ namespace CrowOs {
 		/**
 		 * Prints text on the screen
 		 *
-		 * @param color text color
-		 * @param text  text to print
-		 * @param x     cursor position x
-		 * @param y     cursor position y
+		 * @param text                text to print
+		 * @param x                   cursor position x
+		 * @param y                   cursor position y
+		 * @param textForegroundColor text foreground color
+		 * @param textBackgroundColor text background color if not set than default background color is used
 		 */
-		void Screen::printText(const uint16_t color, const char* text, const int x, const int y) const {
+		void Screen::printText(const char* text, const int x, const int y, const uint16_t textForegroundColor, const int textBackgroundColor /* = -1 */) const {
 
-			M5.Lcd.setTextColor(color, backgroundColor);
+			if(textBackgroundColor != -1) {
+				M5.Lcd.setTextColor(textForegroundColor, textBackgroundColor);
+			}
+			else {
+				M5.Lcd.setTextColor(textForegroundColor, backgroundColor);
+			}
+
 			M5.Lcd.setCursor(x, y);
 			M5.Lcd.print(text);
 			if(LOG_DEBUG) Serial.printf("Debug : [Screen] printText text = %s at x = %d and y = %d\n", text, x, y);
@@ -83,20 +91,26 @@ namespace CrowOs {
 		void Screen::clearLCD() const {
 
 			M5.Lcd.fillScreen(backgroundColor);
+			M5.Lcd.fillRect(0, 0, getMaxX(), MIN_Y, TFT_BLACK);
 			if(LOG_DEBUG) Serial.println("Debug : [Screen] clearLCD");
 		}
 
 		/**
-		 * Prints text on the screen
+		 * Clear screen text
 		 *
-		 * @param color text color
-		 * @param text  text to print
-		 * @param x     cursor position x
-		 * @param y     cursor position y
+		 * @param size       of text to clean
+		 * @param x          cursor x position
+		 * @param y          cursor y position
+		 * @param clearColor color to clear text with
 		 */
-		void Screen::clearText(const int size, const int x, const int y) const {
+		void Screen::clearText(const int size, const int x, const int y, const int clearColor /* = -1 */) const {
 
-			M5.Lcd.setTextColor(backgroundColor - 1, backgroundColor);
+			if(clearColor != -1) {
+				M5.Lcd.setTextColor(clearColor - 1, clearColor);
+			}
+			else {
+				M5.Lcd.setTextColor(backgroundColor - 1, backgroundColor);
+			}
 			M5.Lcd.setCursor(x, y);
 
 			char buff[size];
@@ -123,6 +137,7 @@ namespace CrowOs {
 		 * Shows crow logo
 		 */
 		void Screen::showLogo() const {
+
 			clearLCD();
 			M5.Lcd.pushImage(2, 8, 79, 144, res_logo);
 			if(LOG_DEBUG) Serial.println("Debug : [Screen] showLogo at x = 2, y = 8, w = 79, h = 144");
@@ -135,7 +150,8 @@ namespace CrowOs {
 		 * @param errorDelay time that message will be showen in ms
 		 */
 		void Screen::showError(const char* errorText, const unsigned int errorDelay) {
-			strncpy(errorMessage, errorText, 15);
+
+			strncpy(errorMessage, errorText, getMaxXCaracters());
 			m_errorDelay = millis() + errorDelay;
 		}
 
@@ -148,6 +164,82 @@ namespace CrowOs {
 			if(brightness > 15) brightness = 7;
 			M5.Axp.ScreenBreath(brightness);
 			if(LOG_DEBUG) Serial.printf("Debug : [Screen] changeBrightness brightness = %d\n", brightness);
+		}
+
+		/**
+		 * Get maximum X screen coordinate
+		 *
+		 * @return maximum X screen coordinate
+		 */
+		int Screen::getMaxX() const {
+
+			if(screenOrientation == SCREEN_INVERSED_PORTRET || screenOrientation == SCREEN_NORMAL_PORTRET) return 80;
+			return 160;
+		}
+
+		/**
+		 * Gets maximum caracters on X axis
+		 *
+		 * @return X axis maximum caracters
+		 */
+		int Screen::getMaxXCaracters() const {
+
+			if(screenOrientation == SCREEN_INVERSED_PORTRET || screenOrientation == SCREEN_NORMAL_PORTRET) return 15;
+			return 27;
+		}
+
+		/**
+		 * Get maximum Y screen coordinate
+		 *
+		 * @return maximum Y screen coordinate
+		 */
+		int Screen::getMaxY() const {
+
+			if(screenOrientation == SCREEN_INVERSED_PORTRET || screenOrientation == SCREEN_NORMAL_PORTRET) return 160;
+			return 80;
+		}
+
+		/**
+		 * Gets maximum caracters on Y axis
+		 *
+		 * @return Y axis maximum caracters
+		 */
+		int Screen::getMaxYCaracters() const {
+
+			if(screenOrientation == SCREEN_INVERSED_PORTRET || screenOrientation == SCREEN_NORMAL_PORTRET) return 19;
+			return 9;
+		}
+
+		/**
+		 * Get minimum Y screen coordinate
+		 *
+		 * @return minimum Y screen coordinate
+		 */
+		int Screen::getMinY() const {
+
+			return MIN_Y;
+		}
+
+		/**
+		 * Sets screen orientation
+		 *
+		 * @param screen orientation
+		 */
+		void Screen::setScreenOrientation(int orientation) {
+
+			if(orientation == screenOrientation) return;
+			screenOrientation = orientation;
+			M5.Lcd.setRotation(screenOrientation);
+		}
+
+		/**
+		 * Sets screen orientation
+		 *
+		 * @param screen orientation
+		 */
+		short Screen::getScreenOrientation() const {
+
+			return screenOrientation;
 		}
 
 	} // namespace Core
