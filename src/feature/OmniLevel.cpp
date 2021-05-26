@@ -39,6 +39,7 @@ namespace CrowOs {
 
 			// Clear screen and show frame fro progress bar
 			screen->setScreenOrientation(Core::Screen::SCREEN_NORMAL_PORTRET);
+			screen->setBackground(TFT_BLACK);
 			screen->clearLCD();
 
 			// Get saved data
