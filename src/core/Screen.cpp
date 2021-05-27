@@ -91,7 +91,16 @@ namespace CrowOs {
 		void Screen::clearLCD() const {
 
 			M5.Lcd.fillScreen(backgroundColor);
-			M5.Lcd.fillRect(0, 0, getMaxX(), MIN_Y, TFT_BLACK);
+
+			if(screenOrientation == SCREEN_INVERSED_PORTRET || screenOrientation == SCREEN_NORMAL_PORTRET) {
+				M5.Lcd.fillRect(0, 0, getMaxX(), MIN_Y, TFT_BLACK);
+			}
+			else {
+
+				M5.Lcd.fillRoundRect(-7, -5, getMaxX() / 3, MIN_Y + 5, 5, TFT_BLACK);
+				M5.Lcd.fillRoundRect((getMaxX() / 3) * 2, -5, getMaxX(), MIN_Y + 5, 5, TFT_BLACK);
+			}
+
 			if(LOG_DEBUG) Serial.println("Debug : [Screen] clearLCD");
 		}
 
@@ -174,8 +183,8 @@ namespace CrowOs {
 		 */
 		int Screen::getMaxX() const {
 
-			if(screenOrientation == SCREEN_INVERSED_PORTRET || screenOrientation == SCREEN_NORMAL_PORTRET) return 80;
-			return 160;
+			if(screenOrientation == SCREEN_INVERSED_PORTRET || screenOrientation == SCREEN_NORMAL_PORTRET) return TFT_WIDTH;
+			return TFT_HEIGHT;
 		}
 
 		/**
@@ -196,8 +205,8 @@ namespace CrowOs {
 		 */
 		int Screen::getMaxY() const {
 
-			if(screenOrientation == SCREEN_INVERSED_PORTRET || screenOrientation == SCREEN_NORMAL_PORTRET) return 160;
-			return 80;
+			if(screenOrientation == SCREEN_INVERSED_PORTRET || screenOrientation == SCREEN_NORMAL_PORTRET) return TFT_HEIGHT;
+			return TFT_WIDTH;
 		}
 
 		/**
@@ -214,10 +223,13 @@ namespace CrowOs {
 		/**
 		 * Get minimum Y screen coordinate
 		 *
+		 * @param x value of x that you want min y for
 		 * @return minimum Y screen coordinate
 		 */
-		int Screen::getMinY() const {
+		int Screen::getMinY(int x /* = -1 */) const {
 
+			if(screenOrientation == SCREEN_NORMAL_PORTRET || screenOrientation == SCREEN_INVERSED_PORTRET || x == -1) return MIN_Y;
+			if(x > (getMaxX() / 3) - 7 && x < (getMaxX() / 3) * 2) return 0;
 			return MIN_Y;
 		}
 
@@ -229,6 +241,7 @@ namespace CrowOs {
 		void Screen::setScreenOrientation(int orientation) {
 
 			if(orientation == screenOrientation) return;
+			if(LOG_DEBUG) Serial.printf("Debug : [Screen] setScreenOrientation new orientation = %d\n", orientation);
 			screenOrientation = orientation;
 			M5.Lcd.setRotation(screenOrientation);
 		}

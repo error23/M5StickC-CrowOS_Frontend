@@ -146,9 +146,10 @@ namespace CrowOs {
 			/**
 			 * Get minimum Y screen coordinate
 			 *
+			 * @param x value of x that you want min y for
 			 * @return minimum Y screen coordinate
 			 */
-			int getMinY() const;
+			int getMinY(int x = -1) const;
 
 			/**
 			 * Sets screen orientation
