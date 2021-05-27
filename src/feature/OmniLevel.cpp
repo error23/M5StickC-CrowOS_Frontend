@@ -69,6 +69,7 @@ namespace CrowOs {
 
 			if(LOG_INFO) Serial.println("Info : [OmniLevel] onStop");
 			if(savedData != NULL) (*savedData)["pressure"] = savedPressure;
+			if(LOG_INFO) Serial.printf("Info : [OmniLevel] onStop savedPressure = %d\n", savedPressure);
 		}
 
 		/**
