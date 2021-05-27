@@ -100,7 +100,7 @@ namespace CrowOs {
 			/**
 			 * Shows crow logo
 			 */
-			void showLogo() const;
+			void showLogo();
 
 			/**
 			 * Shows error at the screen

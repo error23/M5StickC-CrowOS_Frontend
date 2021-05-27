@@ -136,9 +136,10 @@ namespace CrowOs {
 		/**
 		 * Shows crow logo
 		 */
-		void Screen::showLogo() const {
+		void Screen::showLogo() {
 
 			clearLCD();
+			setScreenOrientation(SCREEN_NORMAL_PORTRET);
 			M5.Lcd.pushImage(2, 8, 79, 144, res_logo);
 			if(LOG_DEBUG) Serial.println("Debug : [Screen] showLogo at x = 2, y = 8, w = 79, h = 144");
 		}
