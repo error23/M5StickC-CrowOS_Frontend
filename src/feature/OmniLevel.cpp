@@ -105,6 +105,7 @@ namespace CrowOs {
 		void OmniLevel::onHomeClick() {
 
 			time->keepWokedUp();
+			updateCalibration(currentPressure);
 		}
 
 		/**
@@ -112,7 +113,7 @@ namespace CrowOs {
 		 */
 		void OmniLevel::onHomeDoubleClick() {
 			time->keepWokedUp();
-			updateCalibration();
+			updateCalibration(50);
 		}
 
 		/**
@@ -128,15 +129,21 @@ namespace CrowOs {
 		}
 
 		/**
-		 * Updates calibration from currentPressure to savedPressure
+		 * Updates calibration from pressure to savedPressure
+		 *
+		 * @param pressure pressure to update with
 		 */
-		void OmniLevel::updateCalibration() {
+		void OmniLevel::updateCalibration(const int pressure) {
+
+			if(pressure == savedPressure) return;
+
+			if(LOG_DEBUG) Serial.printf("Debug : [OmniLevel] updateCalibration new pressure = %d\n", pressure);
 
 			// clear old line
 			M5.Lcd.drawLine(1, 15 + (127 - savedPressure), 4, 15 + (127 - savedPressure), BLACK);
 			M5.Lcd.drawLine(26, 15 + (127 - savedPressure), 29, 15 + (127 - savedPressure), BLACK);
 
-			savedPressure = currentPressure;
+			savedPressure = pressure;
 			M5.Lcd.drawLine(1, 15 + (127 - savedPressure), 4, 15 + (127 - savedPressure), 0x7bef);
 			M5.Lcd.drawLine(26, 15 + (127 - savedPressure), 29, 15 + (127 - savedPressure), 0x7bef);
 		}

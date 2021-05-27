@@ -43,9 +43,11 @@ namespace CrowOs {
 			float getPercentError(const float approx, const float exact) const;
 
 			/**
-			 * Updates calibration from currentPressure to savedPressure
+			 * Updates calibration from pressure to savedPressure
+			 *
+			 * @param pressure pressure to update with
 			 */
-			void updateCalibration();
+			void updateCalibration(const int pressure);
 
 			/**
 			 * Draw progress bar from currentPressure
