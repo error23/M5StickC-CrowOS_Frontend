@@ -7,6 +7,7 @@
 
 // local Includes
 #include "core/Feature.hpp"
+#include "resources/r_libelle.hpp"
 
 namespace CrowOs {
 	namespace Feature {
@@ -22,6 +23,9 @@ namespace CrowOs {
 
 			/** Pointer to screen helper */
 			Core::Screen* screen;
+
+			/** background color */
+			const uint16_t backgroundColor;
 
 			/** x accelerometer values */
 			std::deque<float> accelerometerX;

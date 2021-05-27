@@ -13,6 +13,7 @@ namespace CrowOs {
 			: Feature("Libelle")
 			, time(NULL)
 			, screen(NULL)
+			, backgroundColor(0x2A)
 			, accelerometerX()
 			, accelerometerY()
 			, accelerometerXAvg(0)
@@ -51,7 +52,7 @@ namespace CrowOs {
 
 			// Clear screen
 			screen->setScreenOrientation(Core::Screen::SCREEN_RIGHT_LANDSCAPE);
-			screen->setBackground(TFT_CASET);
+			screen->setBackground(backgroundColor);
 			screen->clearLCD();
 			screen->printText("Calibrate", 15, 152, TFT_CYAN);
 		}
@@ -170,10 +171,14 @@ namespace CrowOs {
 		 */
 		void Libelle::drawCircle(const bool clear /* = false */) {
 
-			uint16_t color = TFT_BLUE;
-			if(clear) color = TFT_CASET;
-
-			M5.Lcd.fillCircle(positionX, positionY, radius, color);
+			if(clear) {
+				M5.Lcd.fillCircle(positionX, positionY, radius, backgroundColor);
+				if(LOG_DEBUG) Serial.printf("Debug : [Libelle] drawCircle clear = true, positionX = %d, positionY = %d\n", positionX, positionY);
+			}
+			else {
+				M5.Lcd.pushImage(positionX - radius + 1, positionY - radius + 1, 29, 28, res_circle, 0x0000);
+				if(LOG_DEBUG) Serial.printf("Debug : [Libelle] drawCircle clear = false, positionX = %d, positionY = %d\n", positionX, positionY);
+			}
 		}
 
 		/**
