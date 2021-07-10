@@ -37,7 +37,7 @@ namespace CrowOs {
 			led = ledHelper;
 			time = timeHelper;
 
-			// Clear screen and show frame fro progress bar
+			// Clear screen and show frame for progress bar
 			screen->setScreenOrientation(Core::Screen::SCREEN_NORMAL_PORTRET);
 			screen->setBackground(TFT_BLACK);
 			screen->clearLCD();
