@@ -123,11 +123,11 @@ namespace CrowOs {
 			int getMaxX() const;
 
 			/**
-			 * Gets maximum caracters on X axis
+			 * Gets maximum characters on X axis
 			 *
-			 * @return X axis maximum caracters
+			 * @return X axis maximum characters
 			 */
-			int getMaxXCaracters() const;
+			int getMaxXCharacters() const;
 
 			/**
 			 * Get maximum Y screen coordinate
@@ -137,11 +137,11 @@ namespace CrowOs {
 			int getMaxY() const;
 
 			/**
-			 * Gets maximum caracters on Y axis
+			 * Gets maximum characters on Y axis
 			 *
-			 * @return Y axis maximum caracters
+			 * @return Y axis maximum characters
 			 */
-			int getMaxYCaracters() const;
+			int getMaxYCharacters() const;
 
 			/**
 			 * Get minimum Y screen coordinate

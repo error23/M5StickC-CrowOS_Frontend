@@ -46,7 +46,7 @@ namespace CrowOs {
 
 				printText(errorMessage, 2, getMaxY() - 8, TFT_BLACK, TFT_RED);
 
-				int emptySize = getMaxXCaracters() - strlen(errorMessage);
+				int emptySize = getMaxXCharacters() - strlen(errorMessage);
 				char emptyBuff[emptySize];
 				for(int i = 0; i < emptySize - 1; i++) {
 					emptyBuff[i] = ' ';
@@ -57,7 +57,7 @@ namespace CrowOs {
 			else if(errorMessage[0] != '\0') {
 
 				if(LOG_INFO) Serial.printf("Info : [Screen] loop hide error message = %s\n", errorMessage);
-				clearText(getMaxXCaracters(), 2, getMaxY() - 8);
+				clearText(getMaxXCharacters(), 2, getMaxY() - 8);
 				errorMessage[0] = '\0';
 			}
 		}
@@ -129,7 +129,7 @@ namespace CrowOs {
 			buff[size - 1] = '\0';
 
 			M5.Lcd.print(buff);
-			if(LOG_DEBUG) Serial.printf("Debug : [Screen] clearText %d caracters at x = %d, y = %d\n", size, x, y);
+			if(LOG_DEBUG) Serial.printf("Debug : [Screen] clearText %d characters at x = %d, y = %d\n", size, x, y);
 		}
 
 		/**
@@ -161,7 +161,7 @@ namespace CrowOs {
 		 */
 		void Screen::showError(const char* errorText, const unsigned int errorDelay) {
 
-			strncpy(errorMessage, errorText, getMaxXCaracters());
+			strncpy(errorMessage, errorText, getMaxXCharacters());
 			m_errorDelay = millis() + errorDelay;
 		}
 
@@ -188,11 +188,11 @@ namespace CrowOs {
 		}
 
 		/**
-		 * Gets maximum caracters on X axis
+		 * Gets maximum characters on X axis
 		 *
-		 * @return X axis maximum caracters
+		 * @return X axis maximum characters
 		 */
-		int Screen::getMaxXCaracters() const {
+		int Screen::getMaxXCharacters() const {
 
 			if(screenOrientation == SCREEN_INVERSED_PORTRET || screenOrientation == SCREEN_NORMAL_PORTRET) return 15;
 			return 27;
@@ -210,11 +210,11 @@ namespace CrowOs {
 		}
 
 		/**
-		 * Gets maximum caracters on Y axis
+		 * Gets maximum characters on Y axis
 		 *
-		 * @return Y axis maximum caracters
+		 * @return Y axis maximum characters
 		 */
-		int Screen::getMaxYCaracters() const {
+		int Screen::getMaxYCharacters() const {
 
 			if(screenOrientation == SCREEN_INVERSED_PORTRET || screenOrientation == SCREEN_NORMAL_PORTRET) return 19;
 			return 9;
