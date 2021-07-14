@@ -60,7 +60,7 @@ namespace CrowOs {
 			void reconnect();
 
 			/**
-			 * Wait for connection for 130000ms than fail
+			 * Wait for connection for 100000 ms than fail
 			 */
 			const bool waitUntilReconnect();
 

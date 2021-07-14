@@ -10,7 +10,7 @@
 #define MAX_JSON_DOCUMENT_SIZE 1024
 
 #define BACKEND_HOST "192.168.0.1"
-#define BACKEND_PORT 8080
+#define BACKEND_PORT 80
 #define BACKEND_BASE_PATH "/"
 
 #define BACKEND_USER_USERNAME "defineme"

@@ -13,7 +13,7 @@ OneButton homeButton(BUTTON_A_PIN, true);
 OneButton upButton(BUTTON_B_PIN, true);
 
 /** Time helper */
-Time timeHelper(60, 30);
+Time timeHelper(120, 30);
 
 /** Led helper */
 Led ledHelper;
@@ -141,7 +141,7 @@ void sleep() {
 	sleeping = true;
 	if(LOG_DEBUG) Serial.println("Debug : [Main] sleep sleeping = true");
 	saveFeatureDataToServer(false);
-	killCurrentFeature();
+	if(currentFeature != NULL) killCurrentFeature();
 	M5.Axp.SetSleep();
 	smartWifi.disconnect();
 }
@@ -159,7 +159,7 @@ void wakeUp() {
 	M5.Lcd.setSwapBytes(true);
 	screenHelper.setUp();
 	smartWifi.connect();
-	currentFeature = startFeature(currentFeatureIndex);
+	if(currentFeatureIndex != -1) currentFeature = startFeature(currentFeatureIndex);
 
 	sleeping = false;
 }
@@ -173,6 +173,7 @@ void initialiseFeatureData() {
 
 	if(!smartWifi.waitUntilReconnect()) {
 		screenHelper.showError("Init failed !!", 10000);
+		return;
 	}
 
 	DynamicJsonDocument responseBody(MAX_JSON_DOCUMENT_SIZE * (FeatureFactory::featureFactories.size() + 1));

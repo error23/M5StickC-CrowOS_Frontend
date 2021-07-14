@@ -75,7 +75,7 @@ namespace CrowOs {
 		}
 
 		/**
-		 * Wait for connection for 130000ms than fail
+		 * Wait for connection for 100000 ms than fail
 		 */
 		const bool SmartWifi::waitUntilReconnect() {
 
@@ -84,7 +84,7 @@ namespace CrowOs {
 			while(!checkStatus()) {
 
 				reconnect();
-				if(millis() - now >= 130000) {
+				if(millis() - now >= 100000) {
 					if(LOG_INFO) Serial.println("Info : [SmartWifi] waitUntilReconnect failed");
 					return false;
 				}
