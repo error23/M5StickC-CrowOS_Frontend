@@ -173,7 +173,6 @@ void initialiseFeatureData() {
 
 	if(!smartWifi.waitUntilReconnect()) {
 		screenHelper.showError("Init failed !!", 10000);
-		return;
 	}
 
 	DynamicJsonDocument responseBody(MAX_JSON_DOCUMENT_SIZE * (FeatureFactory::featureFactories.size() + 1));
