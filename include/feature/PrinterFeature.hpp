@@ -56,6 +56,9 @@ namespace CrowOs {
 			/** Printer bed temperature */
 			int temperatureBed;
 
+			/** Printer progress while printing */
+			double printingProgress;
+
 			Printer()
 				: id(-1)
 				, machineName()
@@ -70,7 +73,8 @@ namespace CrowOs {
 				, maxZ(-1)
 				, temperatureExtruderLeft(-1)
 				, temperatureExtruderRight(-1)
-				, temperatureBed(-1) {
+				, temperatureBed(-1)
+				, printingProgress(-1) {
 			}
 		};
 

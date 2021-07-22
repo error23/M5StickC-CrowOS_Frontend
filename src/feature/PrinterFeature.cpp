@@ -173,6 +173,7 @@ namespace CrowOs {
 				printers[printerIndex].temperatureExtruderLeft = printerDto["temperatureExtruderLeft"];
 				printers[printerIndex].temperatureExtruderRight = printerDto["temperatureExtruderRight"];
 				printers[printerIndex].temperatureBed = printerDto["temperatureBed"];
+				printers[printerIndex].printingProgress = printerDto["printingProgress"];
 
 				lastPrinterFetch = millis();
 				shouldRedrawScreen = true;
@@ -249,9 +250,17 @@ namespace CrowOs {
 				screen->clearText(screen->getMaxXCharacters(), 5, screen->getMinY() + 12);
 				screen->printText(buff, 5, screen->getMinY() + 12, foregroundColor);
 
-				sprintf(buff, "LED : %s", printers[printerIndex].ledColor);
-				screen->clearText(screen->getMaxXCharacters(), 5, screen->getMinY() + 22);
-				screen->printText(buff, 5, screen->getMinY() + 22, foregroundColor);
+				if(printers[printerIndex].printingProgress == -1 || printers[printerIndex].printingProgress == 100) {
+					sprintf(buff, "LED : %s", printers[printerIndex].ledColor);
+					screen->clearText(screen->getMaxXCharacters(), 5, screen->getMinY() + 22);
+					screen->printText(buff, 5, screen->getMinY() + 22, foregroundColor);
+				}
+				else {
+
+					sprintf(buff, "Progress : %.2f%%", printers[printerIndex].printingProgress);
+					screen->clearText(screen->getMaxXCharacters(), 5, screen->getMinY() + 22);
+					screen->printText(buff, 5, screen->getMinY() + 22, foregroundColor);
+				}
 
 				M5.Lcd.drawLine(5, screen->getMinY() + 31, screen->getMaxX() - 5, screen->getMinY() + 31, foregroundColor);
 
