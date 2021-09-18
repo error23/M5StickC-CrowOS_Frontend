@@ -48,11 +48,11 @@ namespace CrowOs {
 			if(LOG_DEBUG) Serial.printf(", new savedPressure = %d\n", savedPressure);
 
 			// Draw progress bar rectangle
-			M5.Lcd.drawRect(5, 15, 21, 133, 0x7bef);
+			M5.Lcd.drawRect(5, 17, 21, 134, 0x7bef);
 
 			// Draw calibration line
-			M5.Lcd.drawLine(1, 15 + (127 - savedPressure), 4, 15 + (127 - savedPressure), 0x7bef);
-			M5.Lcd.drawLine(26, 15 + (127 - savedPressure), 29, 15 + (127 - savedPressure), 0x7bef);
+			M5.Lcd.drawLine(1, 18 + (127 - savedPressure), 4, 18 + (127 - savedPressure), 0x7bef);
+			M5.Lcd.drawLine(26, 18 + (127 - savedPressure), 29, 18 + (127 - savedPressure), 0x7bef);
 
 			// Draw calibration instructions
 			screen->clearText(9, 15, 152);
@@ -78,7 +78,7 @@ namespace CrowOs {
 		 */
 		void OmniLevel::loop() {
 
-			currentPressure = map(analogRead(G36), 0, 4095, 0, 127);
+			currentPressure = map(analogRead(G36), 0, 3095, 0, 127);
 			if(LOG_DEBUG) Serial.printf("Debug : [OmniLevel] loop currentPressure = %d, savedPressure = %d\n", currentPressure, savedPressure);
 
 			progressBar();
@@ -140,12 +140,12 @@ namespace CrowOs {
 			if(LOG_DEBUG) Serial.printf("Debug : [OmniLevel] updateCalibration new pressure = %d\n", pressure);
 
 			// clear old line
-			M5.Lcd.drawLine(1, 15 + (127 - savedPressure), 4, 15 + (127 - savedPressure), BLACK);
-			M5.Lcd.drawLine(26, 15 + (127 - savedPressure), 29, 15 + (127 - savedPressure), BLACK);
+			M5.Lcd.drawLine(1, 18 + (127 - savedPressure), 4, 18 + (127 - savedPressure), BLACK);
+			M5.Lcd.drawLine(26, 18 + (127 - savedPressure), 29, 18 + (127 - savedPressure), BLACK);
 
 			savedPressure = pressure;
-			M5.Lcd.drawLine(1, 15 + (127 - savedPressure), 4, 15 + (127 - savedPressure), 0x7bef);
-			M5.Lcd.drawLine(26, 15 + (127 - savedPressure), 29, 15 + (127 - savedPressure), 0x7bef);
+			M5.Lcd.drawLine(1, 18 + (127 - savedPressure), 4, 18 + (127 - savedPressure), 0x7bef);
+			M5.Lcd.drawLine(26, 18 + (127 - savedPressure), 29, 18 + (127 - savedPressure), 0x7bef);
 		}
 
 		/**
@@ -153,12 +153,14 @@ namespace CrowOs {
 		 */
 		void OmniLevel::progressBar() {
 
+			for(int i = currentPressure; i <= 127; i++) {
+				M5.Lcd.fillRect(8, 147 - i, 15, 1, BLACK);
+			}
 			for(int i = 0; i <= currentPressure; i++) {
-				M5.Lcd.fillRect(8, 144 - i, 15, 1, rainbow(i));
+				M5.Lcd.fillRect(8, 147 - i, 15, 1, rainbow(i));
 			}
-			for(int i = currentPressure + 1; i <= 128; i++) {
-				M5.Lcd.fillRect(8, 144 - i, 15, 1, BLACK);
-			}
+			// Draw progress bar rectangle
+			M5.Lcd.drawRect(5, 17, 21, 134, 0x7bef);
 		}
 
 		/**
