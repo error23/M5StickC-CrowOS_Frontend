@@ -10,7 +10,7 @@ namespace CrowOs {
 		/**
 		 * Initialises new Time
 		 *
-		 * @param speepTime time to put device on sleep default 60
+		 * @param speepTime time to put device on sleep default 60, 0 for never
 		 * @param maxFps max fps default 25
 		 */
 		Time::Time(const int sleepTime /* = 60 */, const double maxFps /* = 25 */)
@@ -58,6 +58,7 @@ namespace CrowOs {
 		boolean Time::shouldSleep() const {
 
 			if(LOG_DEBUG) Serial.println("Debug : [Time] shouldSleep");
+			if(sleepTime == 0) return false;
 			return convertTimeToSecondes(upTime) - convertTimeToSecondes(lastActiveTime) > sleepTime;
 		}
 

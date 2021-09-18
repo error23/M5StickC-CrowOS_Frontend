@@ -50,7 +50,7 @@ namespace CrowOs {
 			/**
 			 * Initialises new Time
 			 *
-			 * @param speepTime time to put device on sleep default 60
+			 * @param speepTime time to put device on sleep default 60, 0 for never
 			 * @param maxFps max fps default 25
 			 */
 			Time(const int sleepTime = 60, const double maxFps = 25);
